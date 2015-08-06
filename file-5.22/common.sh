@@ -1,0 +1,4 @@
+
+BUILD=$PKGDIR/build
+SRC=$PKGDIR/src
+ROOT=/usr
