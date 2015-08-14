@@ -1,9 +1,16 @@
+#!/usr/bin/bash
 
 # A command interface for packages
 
 . ./config.sh
 
 die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
+
+USING() {
+	for u in $USE; do
+		[ $u = $1 ] && return 0
+	done
+}
 
 [ "$#" -lt 2 ] && die "USAGE: pkg-invoke.sh <command list> <package name>"
 
@@ -39,4 +46,5 @@ else
 	[ -f "$1".cmd.sh ] && . "$1".cmd.sh
 	popd > /dev/null
 fi
-	exit 0
+
+exit 0
