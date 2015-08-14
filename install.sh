@@ -3,20 +3,14 @@
 set +h
 umask 022
 
-LFS=/mnt/LFS
-TOOLS=/tools
+BOOTSTRAP=1
+export BOOTSTRAP
 
-LC_ALL=POSIX
-LFS_TGT=$ARCHITECTURE-lfs-linux-gnu
-PATH=$TOOLS/bin:/bin:/usr/bin
-export LFS LC_ALL LFS_TGT PATH TOOLS
+. config.sh
 
 #mkdir -vp $LFS$TOOLS
 
 #[ -e $TOOLS ] || ln -sv $LFS$TOOLS $TOOLS
-
-BOOTSTRAP=1
-export BOOTSTRAP
 
 INITSYS_PACKAGES="gcc-4.9.2"
 #INITSYS_PACKAGES="binutils-2.25"

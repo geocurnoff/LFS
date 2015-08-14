@@ -4,21 +4,14 @@ mkdir -v -p $SCRATCH || die
 
 pushd $SCRATCH > /dev/null || die
 
-LFS=/mnt/LFS
-TOOLS=/tools
-
-LC_ALL=POSIX
-LFS_TGT=$ARCHITECTURE-lfs-linux-gnu
-PATH=$TOOLS/bin:/bin:/usr/bin   # TODO: turning these off break build. Why?
-
 $SRC/gcc-4.9.2/configure                             \
     --target=$LFS_TGT                                \
-    --prefix=/tools                                  \
+    --prefix=$TOOLS                                  \
     --with-sysroot=$LFS                              \
     --with-newlib                                    \
     --without-headers                                \
-    --with-local-prefix=/tools                       \
-    --with-native-system-header-dir=/tools/include   \
+    --with-local-prefix=$TOOLS                       \
+    --with-native-system-header-dir=$TOOLS/include   \
     --disable-nls                                    \
     --disable-shared                                 \
     --disable-multilib                               \
