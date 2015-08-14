@@ -4,14 +4,21 @@ mkdir -v -p $SCRATCH || die
 
 pushd $SCRATCH > /dev/null || die
 
-$SRC/*/configure                                     \
+LFS=/mnt/LFS
+TOOLS=/tools
+
+LC_ALL=POSIX
+LFS_TGT=$ARCHITECTURE-lfs-linux-gnu
+PATH=$TOOLS/bin:/bin:/usr/bin   # TODO: turning these off break build. Why?
+
+$SRC/gcc-4.9.2/configure                             \
     --target=$LFS_TGT                                \
-    --prefix=$TOOLS                                  \
+    --prefix=/tools                                  \
     --with-sysroot=$LFS                              \
     --with-newlib                                    \
     --without-headers                                \
-    --with-local-prefix=$TOOLS                       \
-    --with-native-system-header-dir=$TOOLS/include   \
+    --with-local-prefix=/tools                       \
+    --with-native-system-header-dir=/tools/include   \
     --disable-nls                                    \
     --disable-shared                                 \
     --disable-multilib                               \
@@ -28,13 +35,13 @@ $SRC/*/configure                                     \
     --disable-libstdc++-v3                           \
     --enable-languages=c,c++ || die "Configuring $NAME failed."
 
-make || die "Building $NAME failed."
+make -j2 || die "Building $NAME failed."
 
 # Reset fake root directory
 rm -rf $BUILD &> /dev/null
 mkdir -v -p $BUILD
 
 # Install to fake root
-make DESTDIR=$BUILD install || die
+make DESTDIR=$BUILD install
 
 popd > /dev/null

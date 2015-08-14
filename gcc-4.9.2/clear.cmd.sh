@@ -1,8 +1,8 @@
 
-rm *.tar.* &> /dev/null
+rm -rf *.tar.*
 
-rm -rf $SRC &> /dev/null
+rm -rf $SRC
 
-rm -rf $BUILD &> /dev/null
+rm -rf $BUILD
 
-rm -rf $SCRATCH &> /dev/null
+rm -rf $SCRATCH
