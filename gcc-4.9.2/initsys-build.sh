@@ -1,4 +1,6 @@
 
+# NOTE: Requires binutils in /tools
+
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
