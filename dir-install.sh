@@ -4,6 +4,8 @@
 
 die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
 
+[ "$#" -lt 2 ] && die "USAGE: dir-install.sh <SOURCE> <DESTINATION> [<LIST OUT>]"
+
 # $1: Where to copy files from
 SRC=$(readlink -f $1)
 
