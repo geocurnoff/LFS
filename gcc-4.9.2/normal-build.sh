@@ -1,4 +1,6 @@
 
+PREFIX=/usr
+
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
@@ -6,7 +8,7 @@ pushd $SCRATCH > /dev/null || die
 
 SED=sed                        \
 $SRC/*/configure               \
-    --prefix=$ROOT             \
+    --prefix=$PREFIX           \
     --enable-languages=c,c++   \
     --disable-multilib         \
     --disable-bootstrap        \
