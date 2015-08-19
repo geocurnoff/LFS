@@ -36,7 +36,7 @@ if (( $FORCE==0 )); then
 	pushd $TGT &> /dev/null || die
 	for f in $FILES
 	do 
-	 	abs_f=`readlink -f $f`
+	 	abs_f=`readlink -f $f` # TODO: doesn't work with links, shows wrong path
 		[ -f $f ] && die "File $abs_f exists!"
 	done > "${3:-/dev/stdout}"
 	popd &> /dev/null || die
@@ -52,9 +52,10 @@ popd &> /dev/null || die
 # Write list of installed files to either standard output or file supplied in third argument
 pushd $TGT &> /dev/null || die
 for f in $FILES
-do 
- 	abs_f=`readlink -f $f`
-	echo $abs_f
+do
+ 	pushd `dirname $f` &> /dev/null
+ 	echo `pwd``basename $f`
+ 	popd &> /dev/null
 done > "${LIST_FILE:-/dev/stdout}"
 popd &> /dev/null || die
 
