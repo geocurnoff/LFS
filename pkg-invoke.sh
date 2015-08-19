@@ -38,10 +38,11 @@ if [ "$#" -gt 2 ]; then
 	$PACKAGES_DIR/pkg-invoke.sh $@ || die
 else
 	pushd $PACKAGES_DIR/$PKG_DIR_NAME/ > /dev/null || die
-	
+
 	PKGDIR=$(pwd)
 	BUILD=$PKGDIR/build
     SRC=$PKGDIR/src
+    SCRATCH=$PKGDIR/scratch
 	NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 
 	echo "Invoking $1 command on package ${NAME-$2}"
