@@ -9,8 +9,13 @@ die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
 # $1: Where to copy files from
 SRC=$(readlink -f $1)
 
+[ -d $SRC ] || die "$SRC is not a valid source directory."
+
 # $2: Where to copy file to
 TGT=$(readlink -f $2)
+
+[ -d $TGT ] || die "$TGT is not a valid destination directory."
+
 
 # $3: Optional, where to write list of installed files
 # Alternatively, output to stdout
