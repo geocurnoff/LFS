@@ -12,7 +12,6 @@ using() {
 
 [ "$#" -lt 2 ] && die "USAGE: pkg-invoke.sh <command list> <package name>"
 
-
 PACKAGES_DIR=$(readlink -f `dirname $0`)
 
 . $PACKAGES_DIR/config.sh
@@ -23,8 +22,9 @@ check_package_exists() {
 	pushd "$PACKAGES_DIR" > /dev/null
 	for pkg in ./*/
 	do
-		[ "$1" = $(basename $pkg) ] && return 0
+		[ "$1" = $(basename $pkg) ] && popd &> /dev/null && return 0
 	done
+	popd &> /dev/null
 	return 1
 }
 
