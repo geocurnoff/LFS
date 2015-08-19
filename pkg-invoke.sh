@@ -2,11 +2,9 @@
 
 # A command interface for packages
 
-. ./config.sh
-
 die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
 
-USING() {
+using() {
 	for u in $USE; do
 		[ $u = $1 ] && return 0
 	done
@@ -14,9 +12,10 @@ USING() {
 
 [ "$#" -lt 2 ] && die "USAGE: pkg-invoke.sh <command list> <package name>"
 
-pushd `dirname $0` &> /dev/null > /dev/null || die
-PACKAGES_DIR=`pwd`
-popd &> /dev/null
+
+PACKAGES_DIR=$(readlink -f `dirname $0`)
+
+. $PACKAGES_DIR/config.sh
 
 PKG_DIR_NAME="${@:$#}"
 
