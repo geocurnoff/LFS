@@ -1,3 +1,0 @@
-
-BUILD=$PKGDIR/build
-SRC=$PKGDIR/src

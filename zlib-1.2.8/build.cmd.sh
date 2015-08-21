@@ -1,7 +1,9 @@
 
+PREFIX=/usr
+
 pushd $SRC/*/ || die
 
-./configure --prefix=$ROOT || die "Configuring $NAME failed."
+./configure --prefix=$PREFIX || die "Configuring $NAME failed."
 
 make || die "Building $NAME failed."
 

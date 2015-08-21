@@ -1,7 +1,10 @@
 
+PREFIX=/usr
+DOCDIR=/usr/share/doc/$NAME
+
 pushd $SRC/*/ || die
 
-./configure --prefix=$ROOT \
+./configure --prefix=$PREFIX \
             --enable-cxx   \
             --docdir=$DOCDIR || die "Configuring $NAME failed."
 

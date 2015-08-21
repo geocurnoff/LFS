@@ -1,7 +1,10 @@
 
+PREFIX=/usr
+DOCDIR=/usr/share/doc/$NAME
+
 pushd $SRC/*/ || die
 
-$SRC/*/configure --prefix=$ROOT        \
+$SRC/*/configure --prefix=$PREFIX        \
             --with-internal-glib  \
             --disable-host-tool   \
             --docdir=$DOCDIR      \

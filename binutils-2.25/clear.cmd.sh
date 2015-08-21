@@ -1,7 +1,4 @@
 
-
-echo $SRC 
-
 rm -rf *.tar.* &> /dev/null
 
 rm -rf $SRC &> /dev/null
