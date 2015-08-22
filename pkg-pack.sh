@@ -2,11 +2,13 @@
 
 # Script for making binary packages
 
-die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
-
 [ "$#" -lt 1 ] && die "USAGE: pkg-pack.sh [<destination>] <package name>"
 
 PACKAGES_DIR=$(readlink -f `dirname $0`)
+
+. $PACKAGES_DIR/config.sh
+
+. $PACKAGES_DIR/common.sh
 
 if [ "$#" -eq 2 ]; then
 	DESTINATION=$1
@@ -21,17 +23,7 @@ DESTINATION="${DESTINATION:-./}"
 # Convert to absolute
 DESTINATION=$(readlink -f $DESTINATION)
 
-check_package_exists() {
-	pushd "$PACKAGES_DIR" > /dev/null
-	for pkg in ./*/
-	do
-		[ "$1" = $(basename $pkg) ] && popd &> /dev/null && return 0
-	done
-	popd &> /dev/null
-	return 1
-}
-
-check_package_exists $PKG_DIR_NAME || die "Package doesn't exist!"
+dir_exists_in $PKG_DIR_NAME $PACKAGES_DIR || die "Package doesn't exist!"
 
 NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 

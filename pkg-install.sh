@@ -2,7 +2,6 @@
 
 PKG_DB="./pkgsdb/"
 
-
 SCRIPT_DIR=$(readlink -f `dirname $0`)
 
 die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }

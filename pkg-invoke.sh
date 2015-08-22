@@ -2,33 +2,17 @@
 
 # A command interface for packages
 
-die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
-
-using() {
-	for u in $USE; do
-		[ $u = $1 ] && return 0
-	done
-}
-
-[ "$#" -lt 2 ] && die "USAGE: pkg-invoke.sh <command list> <package name>"
+[ "$#" -lt 2 ] && echo "USAGE: pkg-invoke.sh <command list> <package name>" 1>&2 && exit 1
 
 PACKAGES_DIR=$(readlink -f `dirname $0`)
 
 . $PACKAGES_DIR/config.sh
 
+. $PACKAGES_DIR/common.sh
+
 PKG_DIR_NAME="${@:$#}"
 
-check_package_exists() {
-	pushd "$PACKAGES_DIR" > /dev/null
-	for pkg in ./*/
-	do
-		[ "$1" = $(basename $pkg) ] && popd &> /dev/null && return 0
-	done
-	popd &> /dev/null
-	return 1
-}
-
-check_package_exists $PKG_DIR_NAME || die "Package doesn't exist!"
+dir_exists_in $PKG_DIR_NAME $PACKAGES_DIR || die "Package doesn't exist!"
 
 # Recursively process each command
 
@@ -45,8 +29,10 @@ else
     SCRATCH=$PKGDIR/scratch
 	NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 
-	echo "Invoking $1 command on package ${NAME-$2}"
-	[ -f "$1".cmd.sh ] && . "$1".cmd.sh
+	RED='\033[1;31m'
+	NC='\033[0m' # No Color
+	printf "${RED}Invoking $1 command on package ${NAME-$2}${NC}\n"
+	[ -f "$1".cmd.sh ] && . "$1".cmd.sh || die "Command not found!"
 	popd > /dev/null
 fi
 

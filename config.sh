@@ -1,4 +1,6 @@
 
+# System configuration 
+
 ARCHITECTURE=$(uname -m)
 USE="example-option another-one"
 
