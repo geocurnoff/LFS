@@ -6,7 +6,7 @@ mkdir -v -p $SCRATCH || die
 
 pushd $SCRATCH > /dev/null || die
 
-../glibc-2.21/configure                           \
+$SRC/glibc-2.21/configure                         \
     --prefix=$TOOLS                               \
     --host=$LFS_TGT                               \
     --build=$(../glibc-2.21/scripts/config.guess) \
