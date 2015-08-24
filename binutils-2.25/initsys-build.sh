@@ -14,7 +14,7 @@ $SRC/*/configure           \
 
 # Reset fake root directory
 rm -rf $BUILD &> /dev/null
-mkdir -v -p $BUILD$TOOLS
+mkdir -v -p $BUILD
 
 case $ARCHITECTURE in
   x86_64) mkdir -v $BUILD$TOOLS/lib && ln -sv lib $BUILD$TOOLS/lib64 ;;
@@ -23,6 +23,6 @@ esac
 make || die "Building $NAME failed."
 
 # Install to fake root
-make DESTDIR="$BUILD$TOOLS" install || die
+make DESTDIR="$BUILD" install || die
 
 popd
