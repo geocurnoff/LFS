@@ -2,9 +2,9 @@
 PREFIX=/usr
 
 # Don't remove this directory when rebuilding
-mkdir -v -p $SCRATCH || die
+mkdir -v -p $SCRATCH/gcc || die
 
-pushd $SCRATCH > /dev/null || die
+pushd $SCRATCH/gcc > /dev/null || die
 
 SED=sed                        \
 $SRC/*/configure               \

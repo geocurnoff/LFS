@@ -1,5 +1,9 @@
 
-pushd $SCRATCH || die
+if [ $TARGET = "initsys/libstd++" ]; then 
+	die "Command $COMMAND does not support target $TARGET."
+fi
+
+pushd $SCRATCH || die "Scratch directory doesn't exist. Forgot to build?"
 
 ulimit -s 32768
 

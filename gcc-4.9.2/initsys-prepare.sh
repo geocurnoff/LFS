@@ -1,4 +1,3 @@
-
 . normal-prepare.sh
 
 pushd $SRC

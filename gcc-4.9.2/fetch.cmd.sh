@@ -1,6 +1,6 @@
 
-if (( $BOOTSTRAP )); then
-    . initsys-fetch.sh
-else
+if [ "$TARGET" = "DEFAULT" ]; then
     . normal-fetch.sh
+else
+    . initsys-fetch.sh
 fi
