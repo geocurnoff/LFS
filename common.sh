@@ -15,3 +15,19 @@ dir_exists_in() {
 	done
 	popd &> /dev/null && return 1
 }
+
+extract_name() {
+	echo $1 | sed -ne 's@\(^[^[:space:]/]*\).*@\1@p'
+	# Sed demangling 
+	# s - replace command, 
+	# @ is delimiter 
+	# \( \) - grouping
+	# ^[^[:space:]/]* - match everything except whitespace and /
+	# \( \).* - match the rest of the string, whatever it is 
+	# @\1@ - replace matched string with the group \1
+	# p - print
+}
+
+extract_target() {
+	echo $1 | sed -ne 's@^[^[:space:]/]*/\([^[:space:]]*\)@\1@p'
+}
