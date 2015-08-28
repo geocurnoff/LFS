@@ -5,7 +5,7 @@ TOOLDIR=/usr
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
-pushd $SCRATCH || die
+cd $SCRATCH || die
 
 $SRC/*/configure \
 --prefix=$PREFIX   \
@@ -21,5 +21,3 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make tooldir=$TOOLDIR DESTDIR=$BUILD install || die
-
-popd

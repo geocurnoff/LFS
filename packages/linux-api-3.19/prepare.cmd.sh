@@ -1,13 +1,9 @@
+[ "$TARGET" = "initsys" ] || die "Package $NAME doesn't support $TARGET target!"
 
 rm -rf $SRC &> /dev/null
 
 mkdir -p $SRC
 
-pushd $SRC
+cd $SRC
 
-tar -xvf ../*.tar.* || die "Unpacking $NAME sources failed. Forgot to fetch?"
-
-popd
-
-
-
+tar -xvf $CACHE/*.tar.* || die "Unpacking $NAME sources failed. Forgot to fetch?"

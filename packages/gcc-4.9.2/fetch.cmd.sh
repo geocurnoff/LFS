@@ -1,6 +1,12 @@
 
+rm -rf $CACHE
+
+mkdir -pv $CACHE
+
+cd $CACHE &> /dev/null
+
 if [ "$TARGET" = "DEFAULT" ]; then
-    . normal-fetch.sh
+    . $PKGDIR/normal-fetch.sh
 else
-    . initsys-fetch.sh
+    . $PKGDIR/initsys-fetch.sh
 fi

@@ -3,11 +3,6 @@ rm -rf $SRC &> /dev/null
 
 mkdir -p $SRC
 
-pushd $SRC
+cd $SRC
 
-tar -xvf ../file-5.22.tar.gz || die "Unpacking $NAME sources failed. Forgot to fetch?"
-
-popd
-
-
-
+tar -xvf $CACHE/file-5.22.tar.gz || die "Unpacking $NAME sources failed. Forgot to fetch?"

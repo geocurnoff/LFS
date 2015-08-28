@@ -1,10 +1,8 @@
 . normal-prepare.sh
 
-pushd $SRC
-
-MPFR_TAR=../mpfr-3.1.2.tar.xz
-MPC_TAR=../mpc-1.0.2.tar.gz
-GMP_TAR=../gmp-6.0.0a.tar.xz
+MPFR_TAR=$CACHE/mpfr-3.1.2.tar.xz
+MPC_TAR=$CACHE/mpc-1.0.2.tar.gz
+GMP_TAR=$CACHE/gmp-6.0.0a.tar.xz
 
 [ -f $MPFR_TAR ] && [ -f $MPC_TAR ] && [ -f $GMP_TAR ] || die "Mising required tars. Forgot to fetch?"
 
@@ -36,5 +34,3 @@ done
 
 # manually enable stack protection
 sed -i '/k prot/agcc_cv_libc_provides_ssp=yes' $GCC_DIR/gcc/configure
-
-popd

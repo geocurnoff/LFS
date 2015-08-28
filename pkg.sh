@@ -2,7 +2,7 @@
 
 # A command interface for packages
 
-INSTALL="${INSTALL:-/home/echolot/root}"
+ROOT="${ROOT:-/home/echolot/root}"
 
 [ "$#" -lt 2 ] && echo "USAGE: pkg-invoke.sh <command list> <package name>" 1>&2 && exit 1
 
@@ -40,7 +40,7 @@ else
 	TARGET="$(parse-target $LAST_ARGUMENT)"
 	TARGET="${TARGET:-DEFAULT}"
 	COMMAND=$1
-	
+
 	RED='\033[1;31m'
 	NC='\033[0m' # No Color
 	printf "${RED}Invoking $1 command on package ${NAME-$2} for target ${TARGET} ${NC}\n"

@@ -2,7 +2,7 @@
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
-pushd $SCRATCH || die
+cd $SCRATCH || die
 
 $SRC/*/configure           \
 --prefix=$TOOLS            \
@@ -24,5 +24,3 @@ make || die "Building $NAME failed."
 
 # Install to fake root
 make DESTDIR="$BUILD" install || die
-
-popd

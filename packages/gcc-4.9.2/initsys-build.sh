@@ -4,7 +4,7 @@
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
-pushd $SCRATCH > /dev/null || die
+cd $SCRATCH > /dev/null || die
 
 $SRC/gcc-4.9.2/configure                             \
     --target=$LFS_TGT                                \
@@ -38,5 +38,3 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make DESTDIR=$BUILD install
-
-popd > /dev/null

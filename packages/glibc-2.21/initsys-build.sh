@@ -4,7 +4,7 @@
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
-pushd $SCRATCH > /dev/null || die
+cd $SCRATCH > /dev/null || die
 
 $SRC/glibc-2.21/configure                         \
     --prefix=$TOOLS                               \
@@ -25,5 +25,3 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make DESTDIR=$BUILD install
-
-popd > /dev/null

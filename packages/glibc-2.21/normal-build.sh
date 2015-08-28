@@ -2,7 +2,7 @@
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
-pushd $SCRATCH > /dev/null || die
+cd $SCRATCH > /dev/null || die
 
 SED=sed                        \
 $SRC/*/configure               \
@@ -39,6 +39,3 @@ if [ $ARCHITECTURE = "x86" ]; then
 else
 	mv -v $BUILD/usr/lib64/*gdb.py $BUILD/usr/share/gdb/auto-load/usr/lib
 fi
-
-
-popd > /dev/null

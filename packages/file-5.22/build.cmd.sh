@@ -1,7 +1,7 @@
 
 PREFIX=/usr
 
-pushd $SRC/*/ || die
+cd $SRC/*/ || die
 
 ./configure --prefix=$PREFIX || die "Configuring $NAME failed."
 
@@ -13,5 +13,3 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make DESTDIR=$BUILD install || die
-
-popd

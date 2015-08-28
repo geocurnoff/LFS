@@ -4,11 +4,6 @@ rm -rvf $SCRATCH &> /dev/null
 
 mkdir -p $SRC
 
-pushd $SRC
+cd $SRC
 
 tar -xvf $CACHE/*.tar.* || die "Unpacking $NAME sources failed. Forgot to fetch?"
-
-popd
-
-
-

@@ -1,5 +1,5 @@
 
-pushd $SRC/*/ || die
+cd $SRC/*/ || die
 
 make clean
 
@@ -17,4 +17,3 @@ mkdir -v -p $BUILD/usr
 # Install to fake root
 make PREFIX=$BUILD/usr install || die
 
-popd
