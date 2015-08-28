@@ -1,6 +1,4 @@
 
-pushd $SRC/*/ || die
+cd $SRC/*/ || die
 
 make check
-
-popd

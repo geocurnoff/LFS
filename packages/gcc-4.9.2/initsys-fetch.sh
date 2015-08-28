@@ -1,8 +1,6 @@
 
-wget http://www.mpfr.org/mpfr-3.1.2/mpfr-3.1.2.tar.xz || die "Fetching sources for package $NAME failed. (mpfr)"
+get-file http://www.mpfr.org/mpfr-3.1.2/mpfr-3.1.2.tar.xz $CACHE/mpfr-3.1.2.tar.xz $USE_CACHED && \
 
-wget http://www.multiprecision.org/mpc/download/mpc-1.0.2.tar.gz || die "Fetching sources for package $NAME failed. (mpc)"
+get-file http://www.multiprecision.org/mpc/download/mpc-1.0.2.tar.gz $CACHE/mpc-1.0.2.tar.gz $USE_CACHED && \
 
-wget http://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.xz || die "Fetching sources for package $NAME failed. (gmp)"
-
-wget http://ftp.gnu.org/gnu/gcc/gcc-4.9.2/gcc-4.9.2.tar.bz2 || die "Fetching sources for package $NAME failed."
+get-file http://ftp.gnu.org/gnu/gmp/gmp-6.0.0a.tar.xz $CACHE/gmp-6.0.0a.tar.xz $USE_CACHED || die "Fetching sources for package $NAME failed."

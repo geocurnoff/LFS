@@ -1,8 +1,5 @@
-
-rm -rf $CACHE
+[ "$TARGET" = "initsys" ] || [ "$TARGET" = "DEFAULT" ] || die "Package $NAME doesn't support $TARGET target!"
 
 mkdir -pv $CACHE
 
-cd $CACHE &> /dev/null
-
-wget http://ftp.gnu.org/gnu/glibc/glibc-2.21.tar.xz || die "Fetching sources for package $NAME failed."
+get-file http://ftp.gnu.org/gnu/glibc/glibc-2.21.tar.xz $CACHE/glibc-2.21.tar.xz $USE_CACHED || die "Fetching sources for package $NAME failed."

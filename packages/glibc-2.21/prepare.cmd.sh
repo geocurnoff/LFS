@@ -1,5 +1,5 @@
 
-if [ "$TARGET" = "initsys/1" ]; then
+if [ "$TARGET" = "initsys" ]; then
     . initsys-prepare.sh
 else
     . normal-prepare.sh

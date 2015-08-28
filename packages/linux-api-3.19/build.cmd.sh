@@ -1,5 +1,5 @@
 
-[ "$TARGET" = "initsys" ] || die "Package $NAME doesn't support $TARGET target!"
+[ "$TARGET" = "initsys" ] || [ "$TARGET" = "DEFAULT" ] || die "Package $NAME doesn't support $TARGET target!"
 
 cd $SRC/*/ || die
 

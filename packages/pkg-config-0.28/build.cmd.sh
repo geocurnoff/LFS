@@ -2,7 +2,7 @@
 PREFIX=/usr
 DOCDIR=/usr/share/doc/$NAME
 
-pushd $SRC/*/ || die
+cd $SRC/*/ || die
 
 $SRC/*/configure --prefix=$PREFIX        \
             --with-internal-glib  \
@@ -18,5 +18,3 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make DESTDIR=$BUILD install || die
-
-popd

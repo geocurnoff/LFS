@@ -1,6 +1,17 @@
 
-if [ $TARGET = "initsys/1" ] || [ $TARGET = "initsys/2" ]; then
-    . initsys-prepare.sh
-else
-    . normal-prepare.sh
-fi
+case "$TARGET" in
+    initsys/1)
+    	. initsys-prepare.sh
+        ;; 
+    initsys/2)
+        . initsys-prepare.sh
+        ;;
+    initsys/libstd++)
+		. normal-prepare.sh
+		;;
+    DEFAULT)
+        . normal-prepare.sh
+        ;;
+    *)
+    	die "Unrecognized target $TARGET!"
+esac

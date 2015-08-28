@@ -1,12 +1,12 @@
 
-rm -rf $CACHE
-
-mkdir -pv $CACHE
-
-cd $CACHE &> /dev/null
-
-if [ "$TARGET" = "DEFAULT" ]; then
-    . $PKGDIR/normal-fetch.sh
-else
-    . $PKGDIR/initsys-fetch.sh
-fi
+case "$TARGET" in
+    initsys/1 | initsys/2)
+        . $PKGDIR/normal-fetch.sh
+    	. $PKGDIR/initsys-fetch.sh
+        ;;    
+    DEFAULT | initsys/libstd++)
+        . $PKGDIR/normal-fetch.sh
+        ;;
+    *)
+    	die "Unrecognized target $TARGET!"
+esac
