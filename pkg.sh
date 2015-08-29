@@ -34,21 +34,21 @@ PKG_DIR_NAME=$(parse-name $LAST_ARGUMENT )
 # Recursively process each command
 
 if [ "$#" -gt 2 ]; then
-	$LFS_SRC/pkg.sh $1 $LAST_ARGUMENT || die "Command $1 failed."
-	shift
-	$LFS_SRC/pkg.sh $@ || die
+    $LFS_SRC/pkg.sh $1 $LAST_ARGUMENT || die "Command $1 failed."
+    shift
+    $LFS_SRC/pkg.sh $@ || die
 else
-	pushd $PACKAGES_DIR/$PKG_DIR_NAME/ > /dev/null || die
+    pushd $PACKAGES_DIR/$PKG_DIR_NAME/ > /dev/null || die
 
-	# Set variables available to all package commands
+    # Set variables available to all package commands
 
-	# Package directory
-	PKGDIR=$(pwd)
+    # Package directory
+    PKGDIR=$(pwd)
 
-	# Fake root
-	BUILD=$PKGDIR/build
+    # Fake root
+    BUILD=$PKGDIR/build
 
-	# Source code
+    # Source code
     SRC=$PKGDIR/src
 
     # Temporary files
@@ -58,35 +58,35 @@ else
     CACHE=$PKGDIR/cache
 
     # Package name
-	NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
+    NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 
-	# Target name
-	TARGET="$(parse-target $LAST_ARGUMENT)"
-	TARGET="${TARGET:-DEFAULT}"
+    # Target name
+    TARGET="$(parse-target $LAST_ARGUMENT)"
+    TARGET="${TARGET:-DEFAULT}"
 
-	# Invoked command
-	COMMAND=$1
+    # Invoked command
+    COMMAND=$1
 
-	echo "PKGDIR: $PKGDIR"
-	echo "BUILD: $BUILD"
-	echo "SRC: $SRC"
-	echo "SCRATCH: $SCRATCH"
-	echo "CACHE: $CACHE"
-	echo "NAME: $NAME"
-	echo "TARGET: $TARGET"
-	echo "COMMAND: $COMMAND"
+    echo "PKGDIR: $PKGDIR"
+    echo "BUILD: $BUILD"
+    echo "SRC: $SRC"
+    echo "SCRATCH: $SCRATCH"
+    echo "CACHE: $CACHE"
+    echo "NAME: $NAME"
+    echo "TARGET: $TARGET"
+    echo "COMMAND: $COMMAND"
 
-	RED='\033[1;31m'
-	NC='\033[0m' # No Color
-	printf "${RED}Invoking $1 command on package ${NAME-$2} for target ${TARGET} ${NC}\n"
+    RED='\033[1;31m'
+    NC='\033[0m' # No Color
+    printf "${RED}Invoking $1 command on package ${NAME-$2} for target ${TARGET} ${NC}\n"
 
-	if [ -f "$1".cmd.sh ]; then
-		. "$1".cmd.sh || die "Command failed!"
-	else
-		die "Command not found!"
-	fi
+    if [ -f "$1".cmd.sh ]; then
+        . "$1".cmd.sh || die "Command failed!"
+    else
+        die "Command not found!"
+    fi
 
-	popd > /dev/null
+    popd > /dev/null
 fi
 
 exit 0

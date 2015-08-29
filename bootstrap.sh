@@ -27,10 +27,10 @@ INITSYS_PACKAGES="binutils-2.25/initsys/1 gcc-4.9.2/initsys/1 linux-api-3.19/ini
 # INITSYS_PACKAGES="binutils-2.25/initsys/1 gcc-4.9.2/initsys/1"
 
 for pkg in $INITSYS_PACKAGES; do
-	NAME=$(parse-name $pkg)
-	echo $NAME
-	[ -d $LFS_SRC/packages/$NAME ] || die "Package doesn't exist"
-	$LFS_SRC/bootstrap-env.sh $LFS_SRC/pkg.sh fetch prepare build install $pkg || die "Building $NAME failed"
+    NAME=$(parse-name $pkg)
+    echo $NAME
+    [ -d $LFS_SRC/packages/$NAME ] || die "Package doesn't exist"
+    $LFS_SRC/bootstrap-env.sh $LFS_SRC/pkg.sh fetch prepare build install $pkg || die "Building $NAME failed"
 done
 
 

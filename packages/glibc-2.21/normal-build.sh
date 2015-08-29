@@ -35,7 +35,7 @@ ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/4.9.2/liblto_plugin.so $BUILD/usr/
 mkdir -pv $BUILD/usr/share/gdb/auto-load/usr/lib
 
 if [ $ARCHITECTURE = "x86" ]; then
-	mv -v $BUILD/usr/lib/*gdb.py $BUILD/usr/share/gdb/auto-load/usr/lib
+    mv -v $BUILD/usr/lib/*gdb.py $BUILD/usr/share/gdb/auto-load/usr/lib
 else
-	mv -v $BUILD/usr/lib64/*gdb.py $BUILD/usr/share/gdb/auto-load/usr/lib
+    mv -v $BUILD/usr/lib64/*gdb.py $BUILD/usr/share/gdb/auto-load/usr/lib
 fi

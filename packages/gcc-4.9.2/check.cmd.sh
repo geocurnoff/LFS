@@ -1,6 +1,6 @@
 
 if [ $TARGET = "initsys/libstd++" ]; then 
-	die "Command $COMMAND does not support target $TARGET."
+    die "Command $COMMAND does not support target $TARGET."
 fi
 
 cd $SCRATCH || die "Scratch directory doesn't exist. Forgot to build?"
