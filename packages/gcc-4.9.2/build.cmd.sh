@@ -9,10 +9,10 @@
 
 case "$TARGET" in
     initsys/1)
-        . initsys-build.sh
+        . initsys-1-build.sh
         ;; 
     initsys/2)
-        . initsys-build.sh
+        . initsys-2-build.sh
         ;;
     initsys/libstd++)
         . initsys-libstd++-build.sh
