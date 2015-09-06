@@ -32,24 +32,23 @@ dir-install() {
     for f in $(find ./ -type f -o -type l)
     do 
         local f_stripped=$(echo $f | sed 's@^\./@@')
-         local abs_f="$TGT/$f_stripped"
-         FILES="$FILES
+        local abs_f="$TGT/$f_stripped"
+        FILES="$FILES 
                $abs_f"
     done
 
     popd &> /dev/null || die
-
+        
     # Check if files already exist
     if (( $FORCE==0 )); then
         pushd $TGT &> /dev/null || die
         local FILES_ALREADY_EXIST=0
-        for f in $FILES
-        do 
+        for f in $FILES; do 
             if [ -f $f ]; then
                 FILES_ALREADY_EXIST=1
                 echo "File $abs_f exists!" 1>&2
             fi
-        done > "${3:-/dev/stdout}"
+        done
         popd &> /dev/null || die
         (( $FILES_ALREADY_EXIST==1 )) && die "Some files already exist in the target directory"
     fi
