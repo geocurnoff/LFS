@@ -24,3 +24,8 @@ make || die "Building $NAME failed."
 
 # Install to fake root
 make DESTDIR="$BUILD" install || die
+
+# FIX: for "file no found" errors when running any executable
+pushd ./tools/lib64/
+ln -s ../bin/x86_64-lfs-linux-gnu-ld ld-linux-x86-64.so.2
+popd
