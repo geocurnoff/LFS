@@ -11,7 +11,6 @@ CXX=$LFS_TGT-g++                                     \
 AR=$LFS_TGT-ar                                       \
 RANLIB=$LFS_TGT-ranlib                               \
 $SRC/gcc-4.9.2/configure                             \
-    --host=$LFS_TGT                                  \
     --prefix=$TOOLS                                  \
     --with-local-prefix=$TOOLS                       \
     --with-native-system-header-dir=$TOOLS/include   \

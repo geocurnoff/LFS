@@ -9,7 +9,7 @@ if [ -f $PKGDIR/pre-install.hook.sh ]; then
     . $PKGDIR/pre-install.hook.sh
 fi
 
-dir-install $BUILD $ROOT '~INSTALLED_FILES'
+dir-install $BUILD $ROOT '~'$TARGET".installed"
 
 echo $PKGDIR/post-install.hook.sh
 

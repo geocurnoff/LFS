@@ -38,7 +38,7 @@ dir-install() {
     done
 
     popd &> /dev/null || die
-        
+  
     # Check if files already exist
     if (( $FORCE==0 )); then
         pushd $TGT &> /dev/null || die
@@ -64,7 +64,7 @@ dir-install() {
     pushd $TGT &> /dev/null || die
     for f in $FILES
     do
-        echo $f
+        echo $f | sed 's@//*@/@g'
     done > "${LIST_FILE:-/dev/stdout}"
     popd &> /dev/null || die
 

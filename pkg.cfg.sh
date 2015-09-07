@@ -5,7 +5,7 @@ ARCHITECTURE="${ARCHITECTURE:-$(uname -m)}"
 ROOT="${ROOT:-/}"
 
 # Allow overwriting files in installation root
-FORCE="${FORCE:-1}"
+FORCE="${FORCE:-0}"
 
 # Use cached version if available
 USE_CACHED="${USE_CACHED:-1}"

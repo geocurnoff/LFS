@@ -42,27 +42,33 @@ else
 
     # Set variables available to all package commands
 
+    # Target name
+    TARGET="$(parse-target $LAST_ARGUMENT)"
+    TARGET="${TARGET:-DEFAULT}"
+
     # Package directory
     PKGDIR=$(pwd)
 
     # Fake root
-    BUILD=$PKGDIR/build
+    BUILD=$PKGDIR/build/$TARGET
 
     # Source code
-    SRC=$PKGDIR/src
+    SRC=$PKGDIR/src/$TARGET
 
     # Temporary files
-    SCRATCH=$PKGDIR/scratch
+    SCRATCH=$PKGDIR/scratch/$TARGET
 
     # Fetched files
-    CACHE=$PKGDIR/cache
+    CACHE=$PKGDIR/cache/$TARGET
 
     # Package name
     NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 
-    # Target name
-    TARGET="$(parse-target $LAST_ARGUMENT)"
-    TARGET="${TARGET:-DEFAULT}"
+      # Prepare directories
+    mkdir -pv $BUILD
+    mkdir -pv $SRC
+    mkdir -pv $SCRATCH
+    mkdir -pv $CACHE
 
     # Invoked command
     COMMAND=$1

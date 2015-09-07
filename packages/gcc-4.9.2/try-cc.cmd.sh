@@ -1,9 +1,25 @@
 
 # Post install sanity check
 
-echo 'main(){}' > dummy.c 
+case "$TARGET" in
+    initsys/1)
+		CC=$LFS_TGT-gcc
+        ;;
+    initsys/2)
+		CC=$LFS_TGT-gcc
+		;;
+    DEFAULT)
+        CC=cc
+        ;;
+    *)
+        die "Unrecognized target $TARGET!"
+esac
+
+pushd $SCRATCH
+
+echo 'int main(){return 0;}' > dummy.c 
 cat dummy.c
-cc dummy.c -v -Wl,--verbose 2>&1 | tee dummy.log
+$CC dummy.c -v -Wl,--verbose 2>&1 | tee dummy.log
 
 printf "\n*** IMPORTANT ***\n\n"
 echo "Referenced program interpreter: "$(readelf -l a.out | grep ': /lib' | sed -n  's/\s*\[.*:\s*\([0-9a-zA-Z/.-]*\)\s*\]\s*/\1/p')
@@ -12,4 +28,7 @@ grep -B4 '^ /usr/include' dummy.log
 grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
 grep "/lib.*/libc.so.6 " dummy.log
 grep found dummy.log
+./a.out
 rm -v dummy.c a.out dummy.log
+
+popd
