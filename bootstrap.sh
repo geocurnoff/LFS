@@ -28,7 +28,7 @@ LFS_SRC=$(readlink -f `dirname $0`)
 #INITSYS_PACKAGES="glibc-2.21/initsys"
 #INITSYS_PACKAGES="gcc-4.9.2/initsys/libstd++"
 #INITSYS_PACKAGES="binutils-2.25/initsys/2"
-INITSYS_PACKAGES="gcc-4.9.2/initsys/2"
+#INITSYS_PACKAGES="gcc-4.9.2/initsys/2"
 
 for pkg in $INITSYS_PACKAGES; do
     NAME=$(parse-name $pkg)

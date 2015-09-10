@@ -29,6 +29,7 @@ grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
 grep "/lib.*/libc.so.6 " dummy.log
 grep found dummy.log
 ./a.out
+read
 rm -v dummy.c a.out dummy.log
 
 popd

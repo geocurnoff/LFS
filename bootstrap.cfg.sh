@@ -12,7 +12,7 @@ TOOLS=/tools
 ROOT="/"
 
 # Allow overwriting files in installation root
-FORCE=0
+FORCE=1
 
 # Use cached version if available
 USE_CACHED=1
