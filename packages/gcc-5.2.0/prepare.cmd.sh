@@ -1,17 +1,14 @@
 
 case "$TARGET" in
-    initsys/1)
+    initsys/1?(/)*)
         . initsys-prepare.sh
         ;; 
-    initsys/2)
+    initsys/2?(/)*)
         . initsys-prepare.sh
         ;;
-    initsys/libstd++)
-        . normal-prepare.sh
-        ;;
-    DEFAULT)
+    initsys/libstd++?(/)*)
         . normal-prepare.sh
         ;;
     *)
-        die "Unrecognized target $TARGET!"
+        . normal-prepare.sh
 esac

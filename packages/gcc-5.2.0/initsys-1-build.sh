@@ -1,4 +1,6 @@
 
+. $LFS_SRC/tools.cfg.sh
+
 # NOTE: Requires binutils in /tools
 
 # Don't remove this directory when rebuilding
@@ -6,9 +8,10 @@ mkdir -v -p $SCRATCH || die
 
 cd $SCRATCH > /dev/null || die
 
-$SRC/gcc-4.9.2/configure                             \
+$SRC/gcc-*/configure                                 \
     --target=$LFS_TGT                                \
     --prefix=$TOOLS                                  \
+    --with-glibc-version=2.11                        \
     --with-sysroot=$LFS                              \
     --with-newlib                                    \
     --without-headers                                \
@@ -21,14 +24,15 @@ $SRC/gcc-4.9.2/configure                             \
     --disable-threads                                \
     --disable-libatomic                              \
     --disable-libgomp                                \
-    --disable-libitm                                 \
     --disable-libquadmath                            \
-    --disable-libsanitizer                           \
     --disable-libssp                                 \
     --disable-libvtv                                 \
     --disable-libcilkrts                             \
-    --disable-libstdc++-v3                           \
+    --disable-libstdcxx                              \
     --enable-languages=c,c++ || die "Configuring $NAME failed."
+
+#   --disable-libitm                                 \
+#   --disable-libsanitizer                           \
 
 make -j2 || die "Building $NAME failed."
 

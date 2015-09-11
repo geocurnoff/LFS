@@ -6,7 +6,7 @@ mkdir -p $SRC
 
 cd $SRC
 
-GLIB_TAR=$CACHE/glibc-2.21.tar.xz
+GLIB_TAR=$CACHE/glibc-2.22.tar.xz
 
 [ -f $GLIB_TAR ] || die "Mising required tar. Forgot to fetch?"
 

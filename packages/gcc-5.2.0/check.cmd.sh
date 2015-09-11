@@ -1,5 +1,5 @@
 
-if [ $TARGET = "initsys/libstd++" ]; then 
+if [[ $TARGET == initsys/libstd++?(/)* ]]; then 
     die "Command $COMMAND does not support target $TARGET."
 fi
 

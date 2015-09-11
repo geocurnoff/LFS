@@ -1,3 +1,4 @@
+. $LFS_SRC/tools.cfg.sh
 
 # NOTE: Requires binutils in /tools
 
@@ -10,7 +11,8 @@ CC=$LFS_TGT-gcc                                      \
 CXX=$LFS_TGT-g++                                     \
 AR=$LFS_TGT-ar                                       \
 RANLIB=$LFS_TGT-ranlib                               \
-$SRC/gcc-4.9.2/configure                             \
+$SRC/gcc-*/configure                                 \
+    --with-sysroot=$LFS                              \
     --prefix=$TOOLS                                  \
     --with-local-prefix=$TOOLS                       \
     --with-native-system-header-dir=$TOOLS/include   \
@@ -28,6 +30,10 @@ mkdir -v -p $BUILD
 
 # Install to fake root
 make DESTDIR=$BUILD install
+
+# Make limits file
+cat gcc/limitx.h gcc/glimits.h gcc/limity.h > \
+  $BUILD`dirname $($LFS_TGT-gcc -print-libgcc-file-name)`/include-fixed/limits.h
 
 # cc alias for gcc 
 ln -sv gcc $BUILD/tools/bin/cc

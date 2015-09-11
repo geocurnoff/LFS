@@ -1,3 +1,4 @@
+. $LFS_SRC/tools.cfg.sh
 
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
@@ -7,8 +8,7 @@ cd $SCRATCH || die
 CC=$LFS_TGT-gcc                \
 AR=$LFS_TGT-ar                 \
 RANLIB=$LFS_TGT-ranlib         \
-$SRC/binutils-2.25/configure   \
-    --host=$LFS_TGT            \
+$SRC/binutils-*/configure      \
     --prefix=$TOOLS            \
     --disable-nls              \
     --disable-werror           \

@@ -2,6 +2,12 @@
 
 # A command interface for packages
 
+# Enable extended glob patterns for case expressions
+shopt -s extglob
+
+# Default Permissions & Hashing Off 
+umask 022; set +h;
+
 [ "$#" -lt 2 ] && echo "USAGE: pkg-invoke.sh <command list> <package name>" 1>&2 && exit 1
 
 LFS_SRC=$(readlink -f `dirname $0`)
@@ -17,6 +23,8 @@ LFS_SRC=$(readlink -f `dirname $0`)
 . $LFS_SRC/lib/get-file.sh
 
 . $LFS_SRC/lib/dir-install.sh
+
+. $LFS_SRC/lib/printf-color.sh
 
 # Configuration
 
@@ -82,9 +90,7 @@ else
     echo "TARGET: $TARGET"
     echo "COMMAND: $COMMAND"
 
-    RED='\033[1;31m'
-    NC='\033[0m' # No Color
-    printf "${RED}Invoking $1 command on package ${NAME-$2} for target ${TARGET} ${NC}\n"
+    printf-color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
 
     if [ -f "$1".cmd.sh ]; then
         . "$1".cmd.sh || die "Command failed!"

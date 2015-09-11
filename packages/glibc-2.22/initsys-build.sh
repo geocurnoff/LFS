@@ -1,4 +1,6 @@
 
+. $LFS_SRC/tools.cfg.sh
+
 # NOTE: Requires binutils in /tools
 #       Provides ld*.so library, initsys/1 compiler will not produce working executables without it
 
@@ -7,12 +9,13 @@ mkdir -v -p $SCRATCH || die
 
 cd $SCRATCH > /dev/null || die
 
-$SRC/glibc-2.21/configure                         \
+$SRC/glibc-*/configure                            \
     --prefix=$TOOLS                               \
     --host=$LFS_TGT                               \
-    --build=$(../glibc-2.21/scripts/config.guess) \
+    --build=$($SRC/glibc-*/scripts/config.guess)  \
     --disable-profile                             \
     --enable-kernel=2.6.32                        \
+    --enable-obsolete-rpc                         \
     --with-headers=$TOOLS/include                 \
     libc_cv_forced_unwind=yes                     \
     libc_cv_ctors_header=yes                      \
