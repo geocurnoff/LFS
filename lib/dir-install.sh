@@ -54,11 +54,11 @@ dir-install() {
     fi
 
     # Copy files to target directory
-    pushd $SRC &> /dev/null || die
+    pushd $SRC || die
+    #TODO: copying into symlinked directories is broken
+    cp -rfv ./* $TGT || die "Copy failed"
 
-    cp -r ./* $TGT &> /dev/null || die
-
-    popd &> /dev/null || die
+    popd || die
 
     # Write list of installed files to either standard output or file supplied in third argument
     pushd $TGT &> /dev/null || die

@@ -1,5 +1,5 @@
 . $LFS_SRC/tools.cfg.sh
 
-cd $SRC/*/unix || die
+cd $SRC/*/ || die
 
 TZ=UTC make -k test

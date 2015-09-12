@@ -8,9 +8,13 @@ shopt -s extglob
 # Default Permissions & Hashing Off 
 umask 022; set +h;
 
-[ "$#" -lt 2 ] && echo "USAGE: pkg-invoke.sh <command list> <package name>" 1>&2 && exit 1
+[ "$#" -lt 2 ] && echo "\
+USAGE: pkg.sh <command list> <package name>
+       pkg.sh create <package name>" 1>&2 && exit 1
 
 LFS_SRC=$(readlink -f `dirname $0`)
+PACKAGES_DIR=$LFS_SRC"/packages"
+TEMPLATES_DIR=$LFS_SRC"/templates"
 
 # Import helper functions
 
@@ -26,14 +30,20 @@ LFS_SRC=$(readlink -f `dirname $0`)
 
 . $LFS_SRC/lib/printf-color.sh
 
+. $LFS_SRC/lib/pkg-create.sh
+
 # Configuration
 
 . $LFS_SRC/pkg.cfg.sh
 
-
-PACKAGES_DIR=$LFS_SRC"/packages"
-
 LAST_ARGUMENT="${@:$#}"
+
+# Create package command
+if [ $1 = "create" ]; then
+    printf_color light-red "Creating package $2"
+    pkg-create $2
+    exit 0
+fi
 
 PKG_DIR_NAME=$(parse-name $LAST_ARGUMENT )
 
@@ -73,10 +83,10 @@ else
     NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
 
       # Prepare directories
-    mkdir -pv $BUILD
-    mkdir -pv $SRC
-    mkdir -pv $SCRATCH
-    mkdir -pv $CACHE
+    # mkdir -pv $BUILD
+    # mkdir -pv $SRC
+    # mkdir -pv $SCRATCH
+    # mkdir -pv $CACHE
 
     # Invoked command
     COMMAND=$1
