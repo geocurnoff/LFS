@@ -7,22 +7,23 @@ mkdir -v -p $SCRATCH || die
 
 cd $SCRATCH > /dev/null || die
 
-# CC=$LFS_TGT-gcc                                      \
-# CXX=$LFS_TGT-g++                                     \
-# AR=$LFS_TGT-ar                                       \
-# RANLIB=$LFS_TGT-ranlib                               \
-# $SRC/gcc-*/configure                                 \
-#     --with-sysroot=$LFS                              \
-#     --prefix=$TOOLS                                  \
-#     --with-local-prefix=$TOOLS                       \
-#     --with-native-system-header-dir=$TOOLS/include   \
-#     --enable-languages=c,c++                         \
-#     --disable-libstdcxx-pch                          \
-#     --disable-multilib                               \
-#     --disable-bootstrap                              \
-#     --disable-libgomp || die "Configuring $NAME failed."
+CC=$LFS_TGT-gcc                                      \
+CXX=$LFS_TGT-g++                                     \
+AR=$LFS_TGT-ar                                       \
+RANLIB=$LFS_TGT-ranlib                               \
+$SRC/gcc-*/configure                                 \
+    --with-sysroot=$LFS                              \
+    --prefix=$TOOLS                                  \
+    --host=$LFS_TGT                                  \
+    --with-local-prefix=$TOOLS                       \
+    --with-native-system-header-dir=$TOOLS/include   \
+    --enable-languages=c,c++                         \
+    --disable-libstdcxx-pch                          \
+    --disable-multilib                               \
+    --disable-bootstrap                              \
+    --disable-libgomp || die "Configuring $NAME failed."
 
-# make -j2 || die "Building $NAME failed."
+make -j2 || die "Building $NAME failed."
 
 # Reset fake root directory
 rm -rf $BUILD &> /dev/null
@@ -41,14 +42,14 @@ ln -sv gcc $BUILD/tools/bin/cc
 
 # FIX: lib64 again...
 mv -v $BUILD$TOOLS/lib64/* $BUILD$TOOLS/lib
-rm -rv $BUILD$TOOLS/lib64/
+rm -rfv $BUILD$TOOLS/lib64/
 
 # Replace all "unknown" paths
-for f in $(find $BUILD -type f -name "*unknown*"); do
-	f_fixed=$(echo $f | sed "s@unknown@lfs@g")
-	mv -v $f $f_fixed
-done
+# for f in $(find $BUILD -type f -name "*unknown*"); do
+# 	f_fixed=$(echo $f | sed "s@unknown@lfs@g")
+# 	mv -v $f $f_fixed
+# done
 
-mv -v $BUILD/tools/include/c++/5.2.0/{x86_64-unknown-linux-gnu,x86_64-lfs-linux-gnu}
-mv -v $BUILD/tools/libexec/gcc/{x86_64-unknown-linux-gnu,x86_64-lfs-linux-gnu}
-cp -rv $BUILD/tools/lib/gcc/x86_64-unknown-linux-gnu/* $BUILD/tools/lib/gcc/x86_64-lfs-linux-gnu/
+# mv -v $BUILD/tools/include/c++/5.2.0/{x86_64-unknown-linux-gnu,x86_64-lfs-linux-gnu}
+# mv -v $BUILD/tools/libexec/gcc/{x86_64-unknown-linux-gnu,x86_64-lfs-linux-gnu}
+# cp -rv $BUILD/tools/lib/gcc/x86_64-unknown-linux-gnu/* $BUILD/tools/lib/gcc/x86_64-lfs-linux-gnu/

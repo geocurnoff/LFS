@@ -11,7 +11,7 @@ PACKAGES_DIR=$LFS_SRC"/packages"
 
 for f in $PACKAGES_DIR/*; do
     NAME=$(basename $f)
-    printf-color light-red "Clearing $NAME"
+    printf_color   light-red "Clearing $NAME"
     rm -rfv $f/build
     rm -rfv $f/src
     rm -rfv $f/cache

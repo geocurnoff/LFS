@@ -10,6 +10,7 @@ AR=$LFS_TGT-ar                 \
 RANLIB=$LFS_TGT-ranlib         \
 $SRC/binutils-*/configure      \
     --prefix=$TOOLS            \
+    --host=$LFS_TGT            \
     --disable-nls              \
     --disable-werror           \
     --with-lib-path=$TOOLS/lib \

@@ -90,7 +90,7 @@ else
     echo "TARGET: $TARGET"
     echo "COMMAND: $COMMAND"
 
-    printf-color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
+    printf_color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
 
     if [ -f "$1".cmd.sh ]; then
         . "$1".cmd.sh || die "Command failed!"

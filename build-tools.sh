@@ -16,17 +16,36 @@ LFS_SRC=$(readlink -f `dirname $0`)
 # Recreate install paths
 # umount $TOOLS
 # rm -rf $LFS
-# rm -rf $TOOLS/*
+#rm -rf $TOOLS/*
 # mkdir -vp $LFS$TOOLS
 # mkdir -vp $TOOLS
 #mount --bind $LFS$TOOLS $TOOLS
 
 
-#INITSYS_PACKAGES="binutils-2.25.1/initsys/1 gcc-5.2.0/initsys/1 linux-api-4.2 glibc-2.22/initsys"
-#INITSYS_PACKAGES="linux-api-4.2"
-#INITSYS_PACKAGES="glibc-2.22/initsys"
-#INITSYS_PACKAGES="gcc-5.2.0/initsys/libstd++ binutils-2.25.1/initsys/2 gcc-5.2.0/initsys/2"
-INITSYS_PACKAGES="gcc-5.2.0/initsys/2"
+INITSYS_PACKAGES="\
+binutils-2.25.1/initsys/1 \
+gcc-5.2.0/initsys/1 \
+linux-api-4.2 \
+glibc-2.22/initsys \
+gcc-5.2.0/initsys/libstd++ \
+binutils-2.25.1/initsys/2 \
+gcc-5.2.0/initsys/2 \
+tcl-8.6.4/initsys"
+
+# INITSYS_PACKAGES="\
+# gcc-5.2.0/initsys/libstd++ \
+# binutils-2.25.1/initsys/2 \
+# gcc-5.2.0/initsys/2"
+
+
+INITSYS_PACKAGES="\
+gcc-5.2.0/initsys/1 \
+linux-api-4.2 \
+glibc-2.22/initsys \
+gcc-5.2.0/initsys/libstd++ \
+binutils-2.25.1/initsys/2 \
+gcc-5.2.0/initsys/2"
+
 
 for pkg in $INITSYS_PACKAGES; do
     NAME=$(parse-name $pkg)
@@ -44,7 +63,7 @@ for pkg in $INITSYS_PACKAGES; do
     LFS_TGT=$LFS_TGT \
     PATH=$PATH \
     USE_CACHED=$USE_CACHED \
-    /bin/bash -c "$LFS_SRC/pkg.sh clear fetch prepare build install $pkg" || die "Building $NAME failed"
+    /bin/bash -c "$LFS_SRC/pkg.sh fetch prepare build install $pkg" || die "Building $NAME failed"
 done
 
 
