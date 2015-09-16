@@ -1,4 +1,4 @@
 
-download zlib-1.2.8.tar.xz http://www.zlib.net/zlib-1.2.8.tar.xz
+file mkdir $CACHE
 
-set test_var 10
+download $CACHE/zlib-1.2.8.tar.xz http://www.zlib.net/zlib-1.2.8.tar.xz
