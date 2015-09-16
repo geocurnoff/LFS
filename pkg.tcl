@@ -1,8 +1,9 @@
 #!/usr/bin/tclsh
 
 source ./download.tcl
-source ./shell.tcl
+source ./run.tcl
 source ./colorize.tcl
+source ./unpack.tcl
 
 namespace eval ::lfs {
   namespace export set?
