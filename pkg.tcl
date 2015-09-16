@@ -6,40 +6,33 @@ source ./colorize.tcl
 source ./unpack.tcl
 
 namespace eval ::lfs {
-  namespace export set?
-
+  
 	proc parse_goal {goal package target} {
 		upvar $package p
 		upvar $target t
-		regexp {([^/[:space:]]+)/?([^:space:]*)} $goal _ p t
+		regexp {([^/[:space:]]+)/?([^[:space:]]*)} $goal _ p t
 	}
 
-	proc set? {dst src} {
-		upvar $dst d	
-		if {![info exists $d] || $d == ""} {
-			set d $src
-		}
-	}
 }
 
 namespace import ::lfs::*
+namespace import ::usability::*
 
 set ::lfs::SCRIPT_DIR [file dirname [file normalize [info script]]]
 set COMMANDS [lrange $argv 0 end-1]
 set GOAL [lindex $argv [expr $argc - 1]]
 ::lfs::parse_goal $GOAL PACKAGE_NAME TARGET_NAME
+set? TARGET_NAME "DEFAULT"
 set PACKAGE_DIR [file normalize "$::lfs::SCRIPT_DIR/packages/$PACKAGE_NAME"]
-set CACHE "$PACKAGE_DIR/cache"
-set SRC "$PACKAGE_DIR/src"
-set BUILD "$PACKAGE_DIR/build"
-set SCRATCH "$PACKAGE_DIR/scratch"
+set CACHE "$PACKAGE_DIR/cache/$TARGET_NAME"
+set SRC "$PACKAGE_DIR/src/$TARGET_NAME"
+set BUILD "$PACKAGE_DIR/build/$TARGET_NAME"
+set SCRATCH "$PACKAGE_DIR/scratch/$TARGET_NAME"
 
 if {![expr [file exists $PACKAGE_DIR] && [file isdirectory $PACKAGE_DIR]]} {
 	puts stderr "Package \"$PACKAGE_NAME\" doesn't exist!"
 	exit 1
 }
-
-set? TARGET_NAME "DEFAULT"
 
 foreach COMMAND $COMMANDS {
 	set COMMAND_FILE "$PACKAGE_DIR/$COMMAND.cmd.tcl"
