@@ -38,13 +38,6 @@ TEMPLATES_DIR=$LFS_SRC"/templates"
 
 LAST_ARGUMENT="${@:$#}"
 
-# Create package command
-if [ $1 = "create" ]; then
-    printf_color light-red "Creating package $2"
-    pkg-create $2
-    exit 0
-fi
-
 PKG_DIR_NAME=$(parse-name $LAST_ARGUMENT )
 
 [ -d $PACKAGES_DIR/$PKG_DIR_NAME ] || die "Package doesn't exist!"
