@@ -1,0 +1,3 @@
+Additional configure options:
+	disable mono: --enable-csharp=no
+	disable java: --disable-java
