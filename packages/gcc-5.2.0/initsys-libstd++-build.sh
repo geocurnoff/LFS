@@ -28,5 +28,5 @@ make DESTDIR=$BUILD install || die
 
 # FIX: for -lstdc++ not found error from ld
 if [ $ARCHITECTURE = "x86_64" ]; then
-    mv -v $BUILD$TOOLS/lib64/* $BUILD$TOOLS/lib/
+    mv -v $BUILD/$TOOLS_PREFIX/lib64/* $BUILD/$TOOLS_PREFIX/lib/
 fi

@@ -14,7 +14,7 @@ dir-install() {
     # $2: Where to copy file to
     local TGT=$(readlink -f $2)
 
-    [ -d $TGT ] || die "$TGT is not a valid destination directory."
+    [ -e $TGT ] || die "$TGT doesn't exist!"
 
     # $3: Optional, where to write list of installed files
     # Alternatively, output to stdout
@@ -28,13 +28,14 @@ dir-install() {
     pushd $SRC &> /dev/null || die
 
     # Find all the files in the source directory and convert to absolute paths
-    local FILES=""
-    for f in $(find ./ -type f -o -type l)
+    local DEST_FILES=""
+    local SRC_FILES=$(find ./ -type f -o -type l)
+    for f in $SRC_FILES
     do 
         local f_stripped=$(echo $f | sed 's@^\./@@')
         local abs_f="$TGT/$f_stripped"
-        FILES="$FILES 
-               $abs_f"
+              DEST_FILES="$DEST_FILES 
+                          $abs_f"
     done
 
     popd &> /dev/null || die
@@ -43,7 +44,7 @@ dir-install() {
     if (( $FORCE==0 )); then
         pushd $TGT &> /dev/null || die
         local FILES_ALREADY_EXIST=0
-        for f in $FILES; do 
+        for f in $DEST_FILES; do 
             if [ -f $f ]; then
                 FILES_ALREADY_EXIST=1
                 echo "File $abs_f exists!" 1>&2
@@ -53,19 +54,20 @@ dir-install() {
         (( $FILES_ALREADY_EXIST==1 )) && die "Some files already exist in the target directory"
     fi
 
-    # Copy files to target directory
+    # Copy files to target directory, creating paths along the way
     pushd $SRC || die
-    #TODO: copying into symlinked directories is broken
-    cp -rfv ./* $TGT || die "Copy failed"
+    
+    for f in $SRC_FILES
+    do
+        local d_dir=$(dirname $f)
+        local d_dir_stripped=$(echo $d_dir | sed 's@^\./@@')
+        local abs_d_dir=$(echo "$TGT/$d_dir_stripped" | sed 's@//*@/@g')
+        mkdir -p $abs_d_dir || die
+        cp $f $abs_d_dir    || die
+        local f_stripped=$(echo $f | sed 's@^\./@@')
+        local abs_f="$TGT/$f_stripped"
+        echo $abs_f | sed 's@//*@/@g'  
+    done > "${LIST_FILE:-/dev/stdout}"
 
     popd || die
-
-    # Write list of installed files to either standard output or file supplied in third argument
-    pushd $TGT &> /dev/null || die
-    for f in $FILES
-    do
-        echo $f | sed 's@//*@/@g'
-    done > "${LIST_FILE:-/dev/stdout}"
-    popd &> /dev/null || die
-
 }

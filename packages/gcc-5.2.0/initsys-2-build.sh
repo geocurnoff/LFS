@@ -41,8 +41,8 @@ cat $SRC/*/gcc/limitx.h $SRC/*/gcc/glimits.h $SRC/*/gcc/limity.h > $LIMITS_DIR/l
 ln -sv gcc $BUILD/tools/bin/cc
 
 # FIX: lib64 again...
-mv -v $BUILD$TOOLS/lib64/* $BUILD$TOOLS/lib
-rm -rfv $BUILD$TOOLS/lib64/
+mv -v $BUILD/$TOOLS_PREFIX/lib64/* $BUILD/$TOOLS_PREFIX/lib
+rm -rfv $BUILD/$TOOLS_PREFIX/lib64/
 
 # Replace all "unknown" paths
 # for f in $(find $BUILD -type f -name "*unknown*"); do

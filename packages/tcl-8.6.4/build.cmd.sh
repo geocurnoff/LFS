@@ -14,11 +14,11 @@ mkdir -v -p $BUILD/lib
 # Install to fake root
 make DESTDIR=$BUILD install || die
 
-chmod -v u+w $BUILD$TOOLS/lib/libtcl8.6.so
+chmod -v u+w $BUILD/$TOOLS_PREFIX/lib/libtcl8.6.so
 
 make DESTDIR=$BUILD install-private-headers
 
-ln -sv tclsh8.6 $BUILD$TOOLS/bin/tclsh
+ln -sv tclsh8.6 $BUILD/$TOOLS_PREFIX/bin/tclsh
 
 # Remove empty lib
 rm -rf $BUILD/lib

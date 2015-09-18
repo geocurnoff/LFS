@@ -1,8 +1,8 @@
 
-rm -rf $CACHE &> /dev/null
+rm -rfv $CACHE
 
-rm -rf $SRC &> /dev/null
+rm -rfv $SRC
 
-rm -rf $BUILD &> /dev/null
+rm -rfv $BUILD
 
-rm -rf $SCRATCH &> /dev/null
+rm -rfv $SCRATCH

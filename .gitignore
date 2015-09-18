@@ -1,1 +1,5 @@
 ~*
+packages/*/build
+packages/*/src
+packages/*/cache
+packages/*/scratch

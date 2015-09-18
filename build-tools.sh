@@ -8,64 +8,41 @@ LFS_SRC=$(readlink -f `dirname $0`)
 # Helper functions
 . $LFS_SRC/lib/parse-name.sh
 
+. $LFS_SRC/lib/parse-target.sh
+
+. $LFS_SRC/lib/printf-color.sh
+
 . $LFS_SRC/lib/die.sh
 
 # Configuration
 . $LFS_SRC/tools.cfg.sh
 
-# Recreate install paths
-# umount $TOOLS
-# rm -rf $LFS
-rm -rf $TOOLS/*
-# mkdir -vp $LFS$TOOLS
-# mkdir -vp $TOOLS
-#mount --bind $LFS$TOOLS $TOOLS
-
-
-INITSYS_PACKAGES="\
-binutils-2.25.1/initsys/1 \
-gcc-5.2.0/initsys/1 \
-linux-api-4.2 \
-glibc-2.22/initsys \
-gcc-5.2.0/initsys/libstd++ \
-binutils-2.25.1/initsys/2 \
-gcc-5.2.0/initsys/2 \
-tcl-8.6.4/initsys \
-expect-5.45/initsys"
-
-# INITSYS_PACKAGES="\
-# gcc-5.2.0/initsys/libstd++ \
-# binutils-2.25.1/initsys/2 \
-# gcc-5.2.0/initsys/2"
-
-
-# INITSYS_PACKAGES="\
-# gcc-5.2.0/initsys/1 \
-# linux-api-4.2 \
-# glibc-2.22/initsys \
-# gcc-5.2.0/initsys/libstd++ \
-# binutils-2.25.1/initsys/2 \
-# gcc-5.2.0/initsys/2"
-
-
-for pkg in $INITSYS_PACKAGES; do
+for pkg in $TOOLS_PACKAGES; do
     NAME=$(parse-name $pkg)
-    echo $NAME
     [ -d $LFS_SRC/packages/$NAME ] || die "Package doesn't exist"
+
     env -i \
     HOME=$HOME \
     TERM=$TERM PS1='\u:\w\$ ' \
     ARCHITECTURE=$ARCHITECTURE \
-    LFS=$LFS \
+    TOOLS_PREFIX=$TOOLS_PREFIX \
     TOOLS=$TOOLS \
     ROOT=$ROOT \
-    FORCE=$FORCE \
+    FORCE=1 \
     LC_ALL=$LC_ALL \
     LFS_TGT=$LFS_TGT \
     PATH=$PATH \
     USE_CACHED=$USE_CACHED \
-    /bin/bash -c "$LFS_SRC/pkg.sh clear fetch prepare build install $pkg" || die "Building $NAME failed"
+    /bin/bash -c "$LFS_SRC/pkg.sh $COMMANDS $pkg" || die "Building $NAME failed"
 done
 
+exit 0
 
+if (( $STRIP==1 )); then
+    strip --strip-debug $TOOLS/lib/*
+    /usr/bin/strip --strip-unneeded $TOOLS/{,s}bin/*
+    rm -rf $TOOLS/{,share}/{info,man,doc}
+fi
+
+sudo chown -R root:root $ROOT/$TOOLS_PREFIX
 

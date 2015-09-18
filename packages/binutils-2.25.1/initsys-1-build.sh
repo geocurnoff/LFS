@@ -19,7 +19,7 @@ rm -rf $BUILD &> /dev/null
 mkdir -v -p $BUILD
 
 case $ARCHITECTURE in
-  x86_64) mkdir -v $BUILD$TOOLS/lib && ln -sv lib $BUILD$TOOLS/lib64 ;;
+  x86_64) mkdir -v $BUILD/$TOOLS_PREFIX/lib && ln -sv lib $BUILD/$TOOLS_PREFIX/lib64 ;;
 esac
 
 make || die "Building $NAME failed."

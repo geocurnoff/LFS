@@ -18,7 +18,7 @@ dir-install $BUILD $ROOT $SAFE_NAME
 echo "
 Following files were installed:
 "
-cat $SAFE_NAME
+cat $SAFE_NAME || die
 echo ""
 
 echo $PKGDIR/post-install.hook.sh

@@ -14,7 +14,6 @@ USAGE: pkg.sh <command list> <package name>
 
 LFS_SRC=$(readlink -f `dirname $0`)
 PACKAGES_DIR=$LFS_SRC"/packages"
-TEMPLATES_DIR=$LFS_SRC"/templates"
 
 # Import helper functions
 
@@ -74,12 +73,6 @@ else
 
     # Package name
     NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
-
-      # Prepare directories
-    # mkdir -pv $BUILD
-    # mkdir -pv $SRC
-    # mkdir -pv $SCRATCH
-    # mkdir -pv $CACHE
 
     # Invoked command
     COMMAND=$1

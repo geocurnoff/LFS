@@ -13,4 +13,4 @@ rm -rf $BUILD
 mkdir -v -p $BUILD
 
 # Install to fake root
-make PREFIX=$BUILD$TOOLS install
+make PREFIX=$BUILD/$TOOLS_PREFIX install
