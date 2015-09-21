@@ -18,7 +18,7 @@ bzip2-1.0.6/initsys \
 coreutils-8.24/initsys \
 diffutils-3.3/initsys \
 file-5.24/initsys \
-findutils-4.4.2/initsys \
+findutils-5.24/initsys \
 gawk-4.1.3/initsys \
 gettext-0.19.5.1/initsys \
 grep-2.21/initsys \
@@ -29,11 +29,17 @@ patch-2.7.5/initsys \
 perl-5.22.0/initsys \
 sed-4.2.2/initsys \
 tar-1.28/initsys \
-texinfo-6.0/initsys \
+textinfo-6.0/initsys \
+util-linux-2.27/initsys \
+xz-5.2.1/initsys"
+
+TOOLS_PACKAGES="\
+textinfo-6.0/initsys \
 util-linux-2.27/initsys \
 xz-5.2.1/initsys"
 
 COMMANDS="clear fetch prepare build install"
+COMMANDS="install"
 
 ARCHITECTURE=$(uname -m)
 

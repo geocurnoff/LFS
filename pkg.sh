@@ -39,7 +39,7 @@ LAST_ARGUMENT="${@:$#}"
 
 PKG_DIR_NAME=$(parse-name $LAST_ARGUMENT )
 
-[ -d $PACKAGES_DIR/$PKG_DIR_NAME ] || die "Package doesn't exist!"
+[ -d $PACKAGES_DIR/$PKG_DIR_NAME ] || die "Package $PKG_DIR_NAME doesn't exist!"
 
 # Recursively process each command
 

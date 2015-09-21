@@ -19,8 +19,7 @@ LFS_SRC=$(readlink -f `dirname $0`)
 
 for pkg in $TOOLS_PACKAGES; do
     NAME=$(parse-name $pkg)
-    [ -d $LFS_SRC/packages/$NAME ] || die "Package doesn't exist"
-
+    [ -d "$LFS_SRC/packages/$NAME" ] || die "Package $NAME doesn't exist"
     env -i \
     HOME=$HOME \
     TERM=$TERM PS1='\u:\w\$ ' \
