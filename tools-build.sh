@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# Constructs a temporary toolchain
+# Constructs a temporary toolchain (in current root filesystem!)
 
 # Root path of LFS scripts and sources
 LFS_SRC=$(readlink -f `dirname $0`)
@@ -15,7 +15,9 @@ LFS_SRC=$(readlink -f `dirname $0`)
 . $LFS_SRC/lib/die.sh
 
 # Configuration
-. $LFS_SRC/tools.cfg.sh
+. $LFS_SRC/lfs.cfg.sh
+
+COMMANDS="clear fetch prepare build install"
 
 for pkg in $TOOLS_PACKAGES; do
     NAME=$(parse-name $pkg)
@@ -26,12 +28,12 @@ for pkg in $TOOLS_PACKAGES; do
     ARCHITECTURE=$ARCHITECTURE \
     TOOLS_PREFIX=$TOOLS_PREFIX \
     TOOLS=$TOOLS \
-    ROOT=$ROOT \
+    ROOT="/" \
     FORCE=1 \
     LC_ALL=$LC_ALL \
     LFS_TGT=$LFS_TGT \
     PATH=$PATH \
-    USE_CACHED=$USE_CACHED \
+    USE_CACHED=1 \
     /bin/bash -c "$LFS_SRC/pkg.sh $COMMANDS $pkg" || die "Building $NAME failed"
 done
 

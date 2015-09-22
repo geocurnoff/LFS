@@ -1,4 +1,3 @@
-#!/bin/bash
 
 TOOLS_PACKAGES="\
 binutils-2.25.1/initsys/1 \
@@ -33,44 +32,11 @@ textinfo-6.0/initsys \
 util-linux-2.27/initsys \
 xz-5.2.1/initsys"
 
-TOOLS_PACKAGES="\
-textinfo-6.0/initsys \
-util-linux-2.27/initsys \
-xz-5.2.1/initsys"
-
 COMMANDS="clear fetch prepare build install"
-COMMANDS="install"
-
-ARCHITECTURE=$(uname -m)
 
 # Path used as prefix for temporary tools
 TOOLS_PREFIX=tools
 
-# Installation root
-ROOT="/"
-
 # Path to tools (convenience binding)
-TOOLS=$ROOT/$TOOLS_PREFIX
+TOOLS=/$TOOLS_PREFIX
 
-# Strip debugging symbols
-STRIP=1
-
-# Use cached version if available
-USE_CACHED=1
-
-# Locale
-LC_ALL=POSIX
-LFS_TGT=$ARCHITECTURE-lfs-linux-gnu
-
-# Prefer newly built binaries under /tools/bin over host system binaries
-PATH=$TOOLS/bin:/bin:/usr/bin
-
-echo "ARCHITECTURE: $ARCHITECTURE"
-echo "TOOLS_PREFIX: $TOOLS_PREFIX"
-echo "ROOT: $ROOT"
-echo "USE_CACHED: $USE_CACHED"
-echo "LC_ALL: $LC_ALL"
-echo "LFS_TGT: $LFS_TGT"
-echo "PATH: $PATH"
-echo "TOOLS_PACKAGES:
-$TOOLS_PACKAGES"
