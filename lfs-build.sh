@@ -24,43 +24,36 @@ USAGE: lfs-build.sh <target directory>"
 
 LFS=$1
 
+# Build tools
+if [ -e /$TOOLS_PREFIX ]; then
+	die "File already exists /$TOOLS_PREFIX!"
+fi
+
+mkdir $LFS/$SOURCES_PREFIX && \
+ln -s $LFS/$TOOLS_PREFIX /$TOOLS_PREFIX && \
+$LFS_SRC/tools-build.sh || die "Building tools failed!"
+
 prepare-root $LFS
 
-prepare-host-tools $LFS
+# Bind source directory
+mkdir $LFS/source
+mount --bind /source $LFS/source
 
-mkdir $LFS/$TOOLS_PREFIX
-mkdir $LFS/$SOURCES_PREFIX
-cp -rv $LFS_SRC/* $LFS/$SOURCES_PREFIX
+
+# chroot "$LFS" /usr/bin/env   -i   \
+#     HOME=/root                    \
+#     TERM="$TERM"                  \
+#     PS1='\u:\w\$ '                \
+#     TEST='abcd'                   \
+#     PATH='/tools/bin:/bin:/usr/bin:/usr/local/bin' \
+#     /usr/bin/bash +h
 
 # -i
 chroot "$LFS" /usr/bin/env        \
     HOME=/root                    \
     TERM="$TERM"                  \
     PS1='\u:\w\$ '                \
-    PATH=/tools/bin:/bin:/usr/bin \
-    /usr/bin/bash --login +h -c "/$SOURCES_PREFIX/tools-build.sh"
+    PATH='/tools/bin:/bin:/usr/bin:/usr/local/bin' \
+    /usr/bin/bash +h -c "/$SOURCES_PREFIX/base-build.sh"
 
-# mkdir -p $LFS/{usr,bin,lib,lib64}
-# mount --bind /usr $LFS/usr
-# mount --bind /bin $LFS/bin
-# mount --bind /lib $LFS/lib
-# mount --bind /lib64 $LFS/lib64
-
-
-echo "post-chroot"
-
-# teardown-root $LFS
-
-
-
-
-# mkdir -p $LFS/{usr,bin,lib,lib64}
-# mount --bind /usr $LFS/usr
-# mount --bind /bin $LFS/bin
-# mount --bind /lib $LFS/lib
-# mount --bind /lib64 $LFS/lib64
-
-# mkdir -p $LFS/usr/src
-
-
-
+teardown-root $LFS

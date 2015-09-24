@@ -29,7 +29,7 @@ $SRC/gcc-*/configure                                 \
     --disable-libvtv                                 \
     --disable-libcilkrts                             \
     --disable-libstdcxx                              \
-    --enable-languages=c,c++ || die "Configuring $NAME failed."
+    --enable-languages=c | tee /config.log || die "Configuring $NAME failed."
 
 #   --disable-libitm                                 \
 #   --disable-libsanitizer                           \
