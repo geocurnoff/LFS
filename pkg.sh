@@ -8,94 +8,86 @@ shopt -s extglob
 # Default Permissions & Hashing Off 
 umask 022; set +h;
 
+# Helper functions for this script
+. $LFS_SRC/lib/die.sh
+. $LFS_SRC/lib/parse-name.sh
+. $LFS_SRC/lib/parse-target.sh
+
+# Helper functions for command script
+COMMAND_IMPORTS="\
+. $LFS_SRC/lib/die.sh;\
+. $LFS_SRC/lib/get-file.sh;\
+. $LFS_SRC/lib/dir-install.sh;\
+. $LFS_SRC/lib/printf-color.sh;"
+
 [ "$#" -lt 2 ] && echo "\
 USAGE: pkg.sh <command list> <package name>
        pkg.sh create <package name>" 1>&2 && exit 1
 
 LFS_SRC=$(readlink -f `dirname $0`)
+PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
+
 PACKAGES_DIR=$LFS_SRC"/packages"
 
-# Import helper functions
-
-. $LFS_SRC/lib/die.sh
-
-. $LFS_SRC/lib/parse-name.sh
-
-. $LFS_SRC/lib/parse-target.sh
-
-. $LFS_SRC/lib/get-file.sh
-
-. $LFS_SRC/lib/dir-install.sh
-
-. $LFS_SRC/lib/printf-color.sh
-
-. $LFS_SRC/lib/pkg-create.sh
-
 # Configuration
-
 . $LFS_SRC/pkg.cfg.sh
 
-LAST_ARGUMENT="${@:$#}"
+SHARED=$LFS_SRC/shared
+LFS_WORK_DIR=$LFS_SRC/.lfs_work
 
-PKG_DIR_NAME=$(parse-name $LAST_ARGUMENT )
-
-[ -d $PACKAGES_DIR/$PKG_DIR_NAME ] || die "Package $PKG_DIR_NAME doesn't exist!"
-
-# Recursively process each command
-
-if [ "$#" -gt 2 ]; then
-    $LFS_SRC/pkg.sh $1 $LAST_ARGUMENT || die "Command $1 failed."
-    shift
-    $LFS_SRC/pkg.sh $@ || die
-else
-    pushd $PACKAGES_DIR/$PKG_DIR_NAME/ > /dev/null || die
-
-    # Set variables available to all package commands
-
-    # Target name
-    TARGET="$(parse-target $LAST_ARGUMENT)"
-    TARGET="${TARGET:-DEFAULT}"
-
-    # Package directory
-    PKGDIR=$(pwd)
-
-    # Fake root
-    BUILD=$PKGDIR/build/$TARGET
-
-    # Source code
-    SRC=$PKGDIR/src/$TARGET
-
-    # Temporary files
-    SCRATCH=$PKGDIR/scratch/$TARGET
-
-    # Fetched files
-    CACHE=$PKGDIR/cache/$TARGET
-
-    # Package name
-    NAME=$(basename "$PACKAGES_DIR/$PKG_DIR_NAME/")
-
-    # Invoked command
-    COMMAND=$1
-
-    echo "PKGDIR: $PKGDIR"
-    echo "BUILD: $BUILD"
-    echo "SRC: $SRC"
-    echo "SCRATCH: $SCRATCH"
-    echo "CACHE: $CACHE"
-    echo "NAME: $NAME"
-    echo "TARGET: $TARGET"
-    echo "COMMAND: $COMMAND"
-
-    printf_color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
-
-    if [ -f "$1".cmd.sh ]; then
-        . "$1".cmd.sh || die "Command failed!"
+process_command() {
+    if [ "$#" -gt 2 ]; then
+        # Pass first command with the last two arguments
+        process_command $1 "${@:$#}"
+        # Discard processed command
+        shift
+        # Recurse on the remainder
+        process_command $@
     else
-        die "Command not found!"
+        NAME=$(parse-name ${@:$#})
+
+        PKGDIR=""
+        for d in $PACKAGES_DIRS; do
+            [ -d $PACKAGES_DIR/$d/$NAME ] && PKGDIR=$PACKAGES_DIR/$d/$NAME && break
+        done
+
+        [ $PKGDIR ] || die "Package $PKG_NAME_ARG doesn't exist!"
+
+        # Sort out arguments
+        COMMAND=$1
+        TARGET="$(parse-target ${@:$#})"
+        TARGET="${TARGET:-DEFAULT}"
+
+        pushd $PKGDIR > /dev/null || die
+
+        # Fake root
+        BUILD=$LFS_WORK_DIR/$NAME/build/$TARGET
+
+        # Source code
+        SRC=$LFS_WORK_DIR/$NAME/src/$TARGET
+
+        # Temporary files
+        SCRATCH=$LFS_WORK_DIR/$NAME/scratch/$TARGET
+
+        # Fetched files
+        CACHE=$LFS_WORK_DIR/$NAME/cache/$TARGET
+
+        printf_color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
+
+        if [ -f "$1".cmd.sh ]; then
+            env -i \
+            BUILD=$BUILD \
+            SRC=$SRC \
+            SCRATCH=$SCRATCH \
+            CACHE=$CACHE \
+            PKGDIR=$PKGDIR \
+            /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS . $1.cmd.sh" || die "Command failed!"
+        else
+            die "Command not found!"
+        fi
+
+        popd > /dev/null
     fi
+}
 
-    popd > /dev/null
-fi
-
-exit 0
-
+process_command $@
