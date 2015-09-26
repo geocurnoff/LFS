@@ -1,5 +1,6 @@
 . $LFS_SRC/tools.cfg.sh
-
+echo "->$LFS_TGT<-"
+exit 0
 # NOTE: Requires binutils in /tools
 
 # Don't remove this directory when rebuilding
