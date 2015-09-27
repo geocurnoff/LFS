@@ -1,4 +1,4 @@
-. $LFS_SRC/tools.cfg.sh
+. $SHARED/tools.cfg.sh
 
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die

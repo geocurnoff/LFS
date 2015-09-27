@@ -2,11 +2,7 @@
 
 # A command interface for packages
 
-# Enable extended glob patterns for case expressions
-shopt -s extglob
-
-# Default Permissions & Hashing Off 
-umask 022; set +h;
+LFS_SRC=$(readlink -f `dirname $0`)
 
 # Helper functions for this script
 . $LFS_SRC/lib/die.sh
@@ -24,7 +20,6 @@ COMMAND_IMPORTS="\
 USAGE: pkg.sh <command list> <package name>
        pkg.sh create <package name>" 1>&2 && exit 1
 
-LFS_SRC=$(readlink -f `dirname $0`)
 PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
 
 PACKAGES_DIR=$LFS_SRC"/packages"
@@ -81,6 +76,7 @@ process_command() {
             SCRATCH=$SCRATCH \
             CACHE=$CACHE \
             PKGDIR=$PKGDIR \
+            PATH=$PATH \
             /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS . $1.cmd.sh" || die "Command failed!"
         else
             die "Command not found!"
