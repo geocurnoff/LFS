@@ -1,1 +1,1 @@
-../../lib/install.cmd.sh
+../../shared/install.cmd.sh

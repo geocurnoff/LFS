@@ -17,8 +17,10 @@ LFS_SRC=$(readlink -f `dirname $0`)
 # Configuration
 . $LFS_SRC/lfs.cfg.sh
 
-COMMANDS="clear fetch prepare build install"
+# Prefer newly built binaries under /tools/bin over host system binaries
+PATH=$TOOLS/bin:/bin:/usr/bin
 
+COMMANDS="clear fetch prepare build install"
 for pkg in $TOOLS_PACKAGES; do
     NAME=$(parse-name $pkg)
     [ -d "$LFS_SRC/packages/$NAME" ] || die "Package $NAME doesn't exist"

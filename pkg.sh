@@ -72,6 +72,9 @@ process_command() {
 
         if [ -f "$1".cmd.sh ]; then
             env -i \
+            TARGET=$TARGET \
+            COMMAND=$COMMAND \
+            NAME=$NAME \
             BUILD=$BUILD \
             SRC=$SRC \
             SCRATCH=$SCRATCH \
@@ -79,6 +82,7 @@ process_command() {
             PKGDIR=$PKGDIR \
             PATH=$PATH \
             SHARED=$SHARED \
+            PACKAGES_DIR=$PACKAGES_DIR \
             LFS_SRC=$LFS_SRC \
             /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS . $1.cmd.sh" || die "Command failed!"
         else

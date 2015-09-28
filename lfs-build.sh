@@ -24,36 +24,41 @@ USAGE: lfs-build.sh <target directory>"
 
 LFS=$1
 
-# Build tools
+if [[ $EUID -ne 0 ]]; then
+	die "Must be ran as root!"
+fi
+
 if [ -e /$TOOLS_PREFIX ]; then
 	die "File already exists /$TOOLS_PREFIX!"
 fi
 
-mkdir $LFS/$SOURCES_PREFIX && \
-ln -s $LFS/$TOOLS_PREFIX /$TOOLS_PREFIX && \
+mkdir $LFS && \
+ln -s $LFS /$TOOLS_PREFIX && \
 $LFS_SRC/tools-build.sh || die "Building tools failed!"
 
-prepare-root $LFS
+rm /$TOOLS_PREFIX
 
-# Bind source directory
-mkdir $LFS/source
-mount --bind /source $LFS/source
+# prepare-root $LFS
+
+# # Bind source directory
+# mkdir $LFS/source
+# mount --bind /source $LFS/source
 
 
-# chroot "$LFS" /usr/bin/env   -i   \
+# # chroot "$LFS" /usr/bin/env   -i   \
+# #     HOME=/root                    \
+# #     TERM="$TERM"                  \
+# #     PS1='\u:\w\$ '                \
+# #     TEST='abcd'                   \
+# #     PATH='/tools/bin:/bin:/usr/bin:/usr/local/bin' \
+# #     /usr/bin/bash +h
+
+# # -i
+# chroot "$LFS" /usr/bin/env        \
 #     HOME=/root                    \
 #     TERM="$TERM"                  \
 #     PS1='\u:\w\$ '                \
-#     TEST='abcd'                   \
 #     PATH='/tools/bin:/bin:/usr/bin:/usr/local/bin' \
-#     /usr/bin/bash +h
+#     /usr/bin/bash +h -c "/$SOURCES_PREFIX/base-build.sh"
 
-# -i
-chroot "$LFS" /usr/bin/env        \
-    HOME=/root                    \
-    TERM="$TERM"                  \
-    PS1='\u:\w\$ '                \
-    PATH='/tools/bin:/bin:/usr/bin:/usr/local/bin' \
-    /usr/bin/bash +h -c "/$SOURCES_PREFIX/base-build.sh"
-
-teardown-root $LFS
+# teardown-root $LFS

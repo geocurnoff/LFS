@@ -1,5 +1,5 @@
 if [[ $TARGET == initsys?(/)* ]]; then
-  . $LFS_SRC/tools.cfg.sh
+  . $SHARED/tools.cfg.sh
 fi
 
 cd $SRC/*/

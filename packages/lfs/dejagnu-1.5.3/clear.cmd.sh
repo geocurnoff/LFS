@@ -1,1 +1,1 @@
-../../lib/clear.cmd.sh
+../../shared/clear.cmd.sh
