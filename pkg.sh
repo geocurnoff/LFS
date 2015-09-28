@@ -46,10 +46,13 @@ process_command() {
 
         PKGDIR=""
         for d in $PACKAGES_DIRS; do
-            [ -d $PACKAGES_DIR/$d/$NAME ] && PKGDIR=$PACKAGES_DIR/$d/$NAME && break
+            for s in $(ls -d $PACKAGES_DIR/$d/*/); do
+                local base=$(basename $s)
+                [[ $base == $NAME ]] && PKGDIR=$PACKAGES_DIR/$d/$NAME && NAME=$base && break 2
+            done
         done
 
-        [ $PKGDIR ] || die "Package $PKG_NAME_ARG doesn't exist!"
+        [ "$PKGDIR" ] || die "Package $PKG_NAME_ARG doesn't exist!"
 
         # Sort out arguments
         COMMAND=$1
