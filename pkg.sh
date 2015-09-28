@@ -48,7 +48,7 @@ process_command() {
         for d in $PACKAGES_DIRS; do
             for s in $(ls -d $PACKAGES_DIR/$d/*/); do
                 local base=$(basename $s)
-                [[ $base == $NAME ]] && PKGDIR=$PACKAGES_DIR/$d/$NAME && NAME=$base && break 2
+                [[ $base == $NAME ]] && NAME=$base && PKGDIR=$PACKAGES_DIR/$d/$NAME && break 2
             done
         done
 

@@ -1,7 +1,4 @@
-. $LFS_SRC/tools.cfg.sh
-echo "->$LFS_TGT<-"
-exit 0
-# NOTE: Requires binutils in /tools
+. $SHARED/tools.cfg.sh
 
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die

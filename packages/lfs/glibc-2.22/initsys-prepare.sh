@@ -1,4 +1,4 @@
-. $LFS_SRC/tools.cfg.sh
+. $SHARED/tools.cfg.sh
 
 . normal-prepare.sh
 

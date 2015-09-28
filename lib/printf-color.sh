@@ -1,7 +1,6 @@
 
-printf_color(){
-    COLOR_OFF='[0m'
-    COLOR=$COLOR_OFF
+color_lookup() {
+    local COLOR="[0m"
     case $1 in
         black)      COLOR="[0;30m" ;;
         red)        COLOR="[0;31m" ;;
@@ -19,6 +18,20 @@ printf_color(){
         light-purple) COLOR="[1;35m" ;;
         light-cyan)   COLOR="[1;36m" ;;
         white)        COLOR="[1;37m" ;;
+        off)          COLOR="[0m" ;;
     esac
-    printf "\033${COLOR}$2\033${COLOR_OFF}\n"
+    echo $COLOR
+}
+
+colorize() {
+    local COLOR_OFF=$(color_lookup off)
+    local COLOR=$(color_lookup $1)
+    echo "\033${COLOR}$2\033${COLOR_OFF}"
+}
+
+printf_color(){
+    local colorized=$(colorize $1 "$2")
+    shift
+    shift
+    printf "$colorized" "$@"
 }

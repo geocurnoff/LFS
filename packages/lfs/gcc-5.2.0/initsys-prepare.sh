@@ -1,6 +1,6 @@
 . normal-prepare.sh
 
-. $LFS_SRC/tools.cfg.sh
+. $SHARED/tools.cfg.sh
 
 MPFR_TAR=$CACHE/mpfr-*.xz
 MPC_TAR=$CACHE/mpc-*.tar.gz

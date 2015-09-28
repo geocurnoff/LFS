@@ -1,5 +1,5 @@
 
-. $LFS_SRC/tools.cfg.sh
+. $SHARED/tools.cfg.sh
 
 cd $SRC/*/ || die
 

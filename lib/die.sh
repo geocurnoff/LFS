@@ -1,2 +1,3 @@
 
-die() {  printf %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
+die() {  printf_color red %s "${@+$@$'\n'}" 1>&2 ; exit 1; }
+
