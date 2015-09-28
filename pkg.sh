@@ -8,6 +8,7 @@ LFS_SRC=$(readlink -f `dirname $0`)
 . $LFS_SRC/lib/die.sh
 . $LFS_SRC/lib/parse-name.sh
 . $LFS_SRC/lib/parse-target.sh
+. $LFS_SRC/lib/printf-color.sh
 
 # Helper functions for command script
 COMMAND_IMPORTS="\
@@ -27,7 +28,7 @@ PACKAGES_DIR=$LFS_SRC"/packages"
 # Configuration
 . $LFS_SRC/pkg.cfg.sh
 
-SHARED=$LFS_SRC/shared
+SHARED=$LFS_SRC/packages/shared
 LFS_WORK_DIR=$LFS_SRC/.lfs_work
 
 process_command() {
@@ -77,6 +78,8 @@ process_command() {
             CACHE=$CACHE \
             PKGDIR=$PKGDIR \
             PATH=$PATH \
+            SHARED=$SHARED \
+            LFS_SRC=$LFS_SRC \
             /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS . $1.cmd.sh" || die "Command failed!"
         else
             die "Command not found!"
