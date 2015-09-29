@@ -58,7 +58,7 @@ dir-install() {
         local d_dir_stripped=$(echo $d_dir | sed 's@^\./@@')
         local abs_d_dir=$(echo "$TGT/$d_dir_stripped" | sed 's@//*@/@g')
         mkdir -p $abs_d_dir || die
-        cp -r $f $abs_d_dir || die "Copying $f to $abs_d_dir failed!"
+        cp -rf $f $abs_d_dir || die "Copying $f to $abs_d_dir failed!"
         local f_stripped=$(echo $f | sed 's@^\./@@')
         local abs_f="$TGT/$f_stripped"
         abs_f=$(echo $abs_f | sed 's@//*@/@g')
