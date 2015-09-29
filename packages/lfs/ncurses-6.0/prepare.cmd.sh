@@ -5,7 +5,7 @@ mkdir -pv $SRC
 
 cd $SRC
 
-tar -xvf $CACHE/*.tar.*
+tar -xvf $CACHE/*.tar.gz
 
 cd ./*/
 
