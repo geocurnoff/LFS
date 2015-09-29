@@ -1,6 +1,5 @@
 
-# NOTE: Requires binutils in /tools
-#       Provides ld*.so library, initsys/1 compiler will not produce working executables without it
+# NOTE: Provides ld*.so library, initsys/1 compiler will not produce working executables without it
 
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die

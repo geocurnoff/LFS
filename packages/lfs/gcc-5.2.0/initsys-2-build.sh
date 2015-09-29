@@ -35,7 +35,7 @@ mkdir -pv $LIMITS_DIR
 cat $SRC/*/gcc/limitx.h $SRC/*/gcc/glimits.h $SRC/*/gcc/limity.h > $LIMITS_DIR/limits.h
 
 # cc alias for gcc 
-ln -sv gcc $BUILD/tools/bin/cc
+ln -sv gcc $BUILD/$TOOLS_PREFIX/bin/cc
 
 # FIX: lib64 again...
 [ -d $BUILD/$TOOLS_PREFIX/lib64/ ] && mv -v $BUILD/$TOOLS_PREFIX/lib64/* $BUILD/$TOOLS_PREFIX/lib
