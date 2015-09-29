@@ -1,6 +1,3 @@
-if [[ $TARGET == initsys?(/)* ]]; then
-  . $SHARED/tools.cfg.sh
-fi
 
 cd $SCRATCH || die
 

@@ -1,5 +1,3 @@
-. $SHARED/tools.cfg.sh
-
 . normal-prepare.sh
 
 cd $SRC/*/

@@ -16,26 +16,17 @@ LFS_SRC=$(readlink -f `dirname $0`)
 
 # Configuration
 . $LFS_SRC/lfs.cfg.sh
+. $LFS_SRC/packages/shared/tools.cfg.sh
 
-# Prefer newly built binaries under /tools/bin over host system binaries
-PATH=$TOOLS/bin:/bin:/usr/bin
+[ -e /$TOOLS ] || die "$TOOLS doesn't exist!"
 
 COMMANDS="clear fetch prepare build install"
 for pkg in $TOOLS_PACKAGES; do
     NAME=$(parse-name $pkg)
-    [ -d "$LFS_SRC/packages/$NAME" ] || die "Package $NAME doesn't exist"
     env -i \
     HOME=$HOME \
     TERM=$TERM PS1='\u:\w\$ ' \
-    ARCHITECTURE=$ARCHITECTURE \
-    TOOLS_PREFIX=$TOOLS_PREFIX \
-    TOOLS=$TOOLS \
-    ROOT="/" \
-    FORCE=1 \
-    LC_ALL=$LC_ALL \
-    LFS_TGT=$LFS_TGT \
     PATH=$PATH \
-    USE_CACHED=1 \
     /bin/bash -c "$LFS_SRC/pkg.sh $COMMANDS $pkg" || die "Building $NAME failed"
 done
 

@@ -1,6 +1,4 @@
 
-. $SHARED/tools.cfg.sh
-
 # NOTE: Requires binutils in /tools
 
 # Don't remove this directory when rebuilding
@@ -29,7 +27,7 @@ $SRC/gcc-*/configure                                 \
     --disable-libvtv                                 \
     --disable-libcilkrts                             \
     --disable-libstdcxx                              \
-    --enable-languages=c | tee /config.log || die "Configuring $NAME failed."
+    --enable-languages=c,c++ || die "Configuring $NAME failed."
 
 #   --disable-libitm                                 \
 #   --disable-libsanitizer                           \

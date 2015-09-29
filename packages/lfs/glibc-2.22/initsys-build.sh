@@ -1,6 +1,4 @@
 
-. $SHARED/tools.cfg.sh
-
 # NOTE: Requires binutils in /tools
 #       Provides ld*.so library, initsys/1 compiler will not produce working executables without it
 

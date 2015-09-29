@@ -1,7 +1,5 @@
 . normal-prepare.sh
 
-. $SHARED/tools.cfg.sh
-
 MPFR_TAR=$CACHE/mpfr-*.xz
 MPC_TAR=$CACHE/mpc-*.tar.gz
 GMP_TAR=$CACHE/gmp-*.tar.xz

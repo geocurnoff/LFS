@@ -1,6 +1,4 @@
-
-. $SHARED/tools.cfg.sh
-
+success $ROOT
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 

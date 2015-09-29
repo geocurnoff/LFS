@@ -1,4 +1,3 @@
-. $SHARED/tools.cfg.sh
 
 cd $SRC/*/
 

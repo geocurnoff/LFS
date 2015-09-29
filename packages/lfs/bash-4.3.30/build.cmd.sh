@@ -1,6 +1,4 @@
 
-. $SHARED/tools.cfg.sh
-
 cd $SRC/*/
 
 ./configure --prefix=$TOOLS --host=$LFS_TGT --without-bash-malloc || die "Configuring $NAME failed."

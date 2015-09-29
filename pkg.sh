@@ -27,9 +27,6 @@ PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
 
 PACKAGES_DIR=$LFS_SRC"/packages"
 
-# Configuration
-. $LFS_SRC/pkg.cfg.sh
-
 SHARED=$LFS_SRC/packages/shared
 LFS_WORK_DIR=$LFS_SRC/.lfs-work
 
@@ -46,7 +43,7 @@ process_command() {
 
         PKGDIR=""
         for d in $PACKAGES_DIRS; do
-            for s in $(ls -d $PACKAGES_DIR/$d/*/); do
+            for s in $(ls -d $PACKAGES_DIR/$d/*/ 2> /dev/null ); do
                 local base=$(basename $s)
                 [[ $base == $NAME ]] && NAME=$base && PKGDIR=$PACKAGES_DIR/$d/$NAME && break 2
             done
@@ -89,7 +86,7 @@ process_command() {
             SHARED=$SHARED \
             PACKAGES_DIR=$PACKAGES_DIR \
             LFS_SRC=$LFS_SRC \
-            /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS . $1.cmd.sh" && \
+            /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS [ -e preamble.cmd.sh ] && . preamble.cmd.sh; . $1.cmd.sh" && \
             success "Command $1 finished." \
             || die "Command failed!"
         else

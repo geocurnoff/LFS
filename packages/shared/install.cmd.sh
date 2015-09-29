@@ -2,7 +2,7 @@
 . $LFS_SRC/lib/dir-install.sh
 . $LFS_SRC/lib/die.sh
 
-[ $ROOT ] || die "INSTALL is not set!"
+[ $ROOT ] || die "ROOT is not set!"
 [ $BUILD ] || die "BUILD=\"$BUILD\" - directory doesn't exist!"
 
 if [ -f $PKGDIR/pre-install.hook.sh ]; then
