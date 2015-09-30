@@ -1,5 +1,5 @@
 
-. $SHARED/common.cfg.sh
+ARCHITECTURE="${ARCHITECTURE:-$(uname -m)}"
 
 # Installation root
 ROOT="${ROOT:-/}"

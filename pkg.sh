@@ -9,7 +9,7 @@ LFS_SRC=$(readlink -f `dirname $0`)
 . $LFS_SRC/lib/success.sh
 . $LFS_SRC/lib/parse-name.sh
 . $LFS_SRC/lib/parse-target.sh
-. $LFS_SRC/lib/printf-color.sh
+
 
 # Helper functions for command script
 COMMAND_IMPORTS="\
@@ -28,7 +28,7 @@ PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
 PACKAGES_DIR=$LFS_SRC"/packages"
 
 SHARED=$LFS_SRC/packages/shared
-LFS_WORK_DIR=$LFS_SRC/.lfs-work
+LFS_WORK_DIR=$LFS_SRC/lfs_work
 
 process_command() {
     if [ "$#" -gt 2 ]; then
@@ -49,7 +49,7 @@ process_command() {
             done
         done
 
-        [ "$PKGDIR" ] || die "Package $PKG_NAME_ARG doesn't exist!"
+        [ "$PKGDIR" ] || die "Package $NAME doesn't exist!"
 
         # Sort out arguments
         COMMAND=$1
@@ -59,16 +59,16 @@ process_command() {
         pushd $PKGDIR > /dev/null || die
 
         # Fake root
-        BUILD=$LFS_WORK_DIR/$NAME/build/$TARGET
+        BUILD=$LFS_WORK_DIR/build/$NAME/$TARGET
 
         # Source code
-        SRC=$LFS_WORK_DIR/$NAME/src/$TARGET
+        SRC=$LFS_WORK_DIR/src/$NAME/$TARGET
 
         # Temporary files
-        SCRATCH=$LFS_WORK_DIR/$NAME/scratch/$TARGET
+        SCRATCH=$LFS_WORK_DIR/scratch/$NAME/$TARGET
 
         # Fetched files
-        CACHE=$LFS_WORK_DIR/$NAME/cache/$TARGET
+        CACHE=$LFS_WORK_DIR/cache/$NAME/$TARGET
 
         printf_color light-red "Invoking $1 command on package ${NAME-$2} for target ${TARGET}\n"
 
@@ -86,7 +86,7 @@ process_command() {
             SHARED=$SHARED \
             PACKAGES_DIR=$PACKAGES_DIR \
             LFS_SRC=$LFS_SRC \
-            /bin/bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS [ -e preamble.cmd.sh ] && . preamble.cmd.sh; . $1.cmd.sh" && \
+            bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS [ -e preamble.cmd.sh ] && . preamble.cmd.sh; . $1.cmd.sh" && \
             success "Command $1 finished." \
             || die "Command failed!"
         else
