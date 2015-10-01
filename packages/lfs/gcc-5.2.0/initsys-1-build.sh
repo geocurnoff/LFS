@@ -1,10 +1,3 @@
-
-echo "LFS_TGT: $LFS_TGT"
-echo "TOOLS: $TOOLS"
-echo "PATH: $PATH"
-echo "BUILD: $BUILD"
-echo "SCRATCH: $SCRATCH"
-
 # NOTE: Requires binutils in /tools
 
 # Don't remove this directory when rebuilding
@@ -38,7 +31,7 @@ $SRC/gcc-*/configure                                 \
 #   --disable-libitm                                 \
 #   --disable-libsanitizer                           \
 
-make || die "Building $NAME failed."
+make -j2 || die "Building $NAME failed."
 
 # Reset fake root directory
 rm -rf $BUILD &> /dev/null
