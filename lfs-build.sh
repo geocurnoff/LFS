@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Construct a basic LFS system in a given directory. Requires tools to be present in /$TOOLS_PREFIX path.
 
@@ -39,20 +39,18 @@ if [ ! -d $LFS/dev ] || [ ! -d $LFS/proc ] || [ ! -d $LFS/sys ] || [ ! -d $LFS/r
 	die "Root file system doesn't appear to be ready. Run chroot-prepare.sh on it."
 fi
 
-$LFS_SRC/group-invoke.sh $LFS_SRC/groups/lfs-fetch.group || die
+bash $LFS_SRC/group-invoke.sh $LFS_SRC/groups/lfs-fetch.group || die
 
-prepare-root $LFS || die
+#prepare-root $LFS || die
 
-mkdir $LFS/source && \
-cp -rvf $LFS_SRC/{*.sh,packages,tests,templates,lib,groups} $LFS/source && \
-mkdir -p $LFS/source/.lfs-work/cache && \
-cp -rvf $LFS_SRC/.lfs-work/cache $LFS/source/.lfs-work/cache || die
 
+
+# Build & Install LFS Packages
 chroot "$LFS" env -i \
 HOME=$HOME \
 TERM=$TERM PS1='\u:\w\$ ' \
 PATH=/bin:/usr/bin:/usr/local/bin:/tools/bin \
-bash -c "/source/group-invoke.sh /source/groups/lfs.group" 
+bash "/source/group-invoke.sh" "/source/groups/lfs.group" 
 
 # teardown-root $LFS
 

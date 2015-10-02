@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # A command interface for packages
 
@@ -28,7 +28,7 @@ PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
 PACKAGES_DIR=$LFS_SRC"/packages"
 
 SHARED=$LFS_SRC/packages/shared
-LFS_WORK_DIR=$LFS_SRC/lfs_work
+LFS_WORK_DIR=$LFS_SRC/.lfs-work
 
 process_command() {
     if [ "$#" -gt 2 ]; then

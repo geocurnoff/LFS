@@ -17,5 +17,6 @@ LFS_TGT=$(uname -m)-lfs-linux-gnu
 
 LC_ALL=POSIX; export LC_ALL
 
+# NOTE: Path is forced to correct value to allow building tools individually, without wrapper scripts
 PATH=$TOOLS/bin:/bin:/usr/bin; export PATH
 

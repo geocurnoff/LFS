@@ -1,27 +1,21 @@
-#!/usr/bin/bash
-
 # Constructs a temporary tool chain (in current root filesystem!)
 
-# Root path of LFS scripts and sources
-LFS_SRC=$(readlink -f `dirname $0`)
+# Input: expect LFS environment variable
+
+# Path of LFS source directory
+LFS_SRC=$(readlink -f `dirname $0`)/../..
+
+#echo ../../$LFS_SRC
+# echo $(readlink -f $LFS_SRC/../..)
+# exit 0
 
 # Helper functions
-. $LFS_SRC/lib/parse-name.sh
-
-. $LFS_SRC/lib/parse-target.sh
-
 . $LFS_SRC/lib/printf-color.sh
 
 . $LFS_SRC/lib/die.sh
 
 # Configuration
-. $LFS_SRC/tools.list.sh
 . $LFS_SRC/packages/shared/tools.cfg.sh
-
-[ "$#" -lt 1 ] && die "\
-USAGE: build-tools.sh <target directory>"
-
-LFS=$1
 
 printf_color light-red "Linking /$TOOLS_PREFIX to $LFS/$TOOLS_PREFIX\n"
 
@@ -36,9 +30,10 @@ env -i \
 HOME=$HOME \
 TERM=$TERM PS1='\u:\w\$ ' \
 PATH=$PATH \
-/bin/bash -c "$LFS_SRC/group-invoke.sh $LFS_SRC/groups/tools.group"
+FORCE=1 \
+/bin/bash -c "$LFS_SRC/group-invoke.sh $LFS_SRC/groups/tools.group" || die
 
-#sudo rm /$TOOLS_PREFIX
+rm /$TOOLS_PREFIX
 
 # exit 0
 
