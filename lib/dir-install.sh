@@ -29,7 +29,7 @@ dir-install() {
     # Find all the files in the source directory
     # NOTE: this includes sym-linked directories
     pushd $SRC &> /dev/null || die
-    local SRC_FILES=$(find ./ -type f -o -type l)
+    local SRC_FILES=$(find ./ -type f -o -type l) # TODO: include empty directories too with -o -type d -empty
     popd &> /dev/null || die
 
     # Convert source paths to destination paths
@@ -57,7 +57,7 @@ dir-install() {
         local d_dir=$(dirname $f)
         local d_dir_stripped=$(echo $d_dir | sed 's@^\./@@')
         local abs_d_dir=$(echo "$TGT/$d_dir_stripped" | sed 's@//*@/@g')
-        mkdir -p $abs_d_dir || die
+        mkdir -p $abs_d_dir || die # TODO: mark directories that we create, so that we can delete them later
         cp -rf $f $abs_d_dir || die "Copying $f to $abs_d_dir failed!"
         local f_stripped=$(echo $f | sed 's@^\./@@')
         local abs_f="$TGT/$f_stripped"

@@ -2,7 +2,7 @@
 
 # A command interface for packages
 
-LFS_SRC=$(readlink -f `dirname $0`)
+LFS_SRC=$(readlink -f `dirname $0`)"/.."
 
 # Helper functions for this script
 . $LFS_SRC/lib/die.sh
@@ -20,8 +20,8 @@ COMMAND_IMPORTS="\
 . $LFS_SRC/lib/printf-color.sh;"
 
 [ "$#" -lt 2 ] && echo "\
-USAGE: pkg.sh <command list> <package name>
-       pkg.sh create <package name>" 1>&2 && exit 1
+USAGE: package-invoke.sh <command list> <package name>
+       package-invoke.sh create <package name>" 1>&2 && exit 1
 
 PACKAGES_DIRS=$(ls $LFS_SRC/packages | sed s/shared//)
 
@@ -86,9 +86,11 @@ process_command() {
             SHARED=$SHARED \
             PACKAGES_DIR=$PACKAGES_DIR \
             LFS_SRC=$LFS_SRC \
+            ROOT=$ROOT \
+            FORCE=$FORCE \
             bash -c "shopt -s extglob; umask 022; set +h; $COMMAND_IMPORTS [ -e preamble.cmd.sh ] && . preamble.cmd.sh; . $1.cmd.sh" && \
             success "Command $1 finished." \
-            || die "Command failed!"
+            || die "Command $COMMAND failed!"
         else
             die "Command not found!"
         fi

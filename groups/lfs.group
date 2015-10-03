@@ -1,1 +1,2 @@
 prepare build install linux-api-4.2/ 
+prepare build install man-pages-4.02/

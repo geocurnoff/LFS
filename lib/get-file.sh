@@ -10,10 +10,14 @@ get-file() {
     	printf_color green "Checksums match.\n" 
     	return 0
     fi
-
+    # TODO: implement sticky checksums, that don't get overwritten
     for u in $1; do
-        wget --timeout=10 --tries=3 $u -O $2 && md5sum $2 2>/dev/null | cut -f 1 -d " " > $MD5_FILE && success "Downloaded $1 to $2." && return 0
+        wget --timeout=10 --tries=3 $u -O $2 && md5sum $2 2>/dev/null | cut -f 1 -d " " > $MD5_FILE && return 0
     done
 
     return 1
+}
+
+get-file-or-die() {
+    get-file $@ && success "Downloaded $1 to $2." || die "Failed downloading $1"
 }
