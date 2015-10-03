@@ -1,9 +1,15 @@
 
+echo "$LFS_TGT"
+echo "$TOOLS"
+echo "$NAME"
+echo "$PATH"
+
 # Don't remove this directory when rebuilding
 mkdir -v -p $SCRATCH || die
 
 cd $SCRATCH > /dev/null || die
 
+GCC=$LFS_TGT-gcc                                     \
 CC=$LFS_TGT-gcc                                      \
 CXX=$LFS_TGT-g++                                     \
 AR=$LFS_TGT-ar                                       \
@@ -11,6 +17,7 @@ RANLIB=$LFS_TGT-ranlib                               \
 $SRC/gcc-*/configure                                 \
     --with-sysroot=$LFS                              \
     --prefix=$TOOLS                                  \
+    --build=$LFS_TGT                                 \
     --host=$LFS_TGT                                  \
     --with-local-prefix=$TOOLS                       \
     --with-native-system-header-dir=$TOOLS/include   \
