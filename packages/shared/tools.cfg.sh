@@ -20,3 +20,4 @@ LC_ALL=POSIX; export LC_ALL
 # NOTE: Path is forced to correct value to allow building tools individually, without wrapper scripts
 PATH=$TOOLS/bin:/bin:/usr/bin; export PATH
 
+FORCE_UNSAFE_CONFIGURE=1; export FORCE_UNSAFE_CONFIGURE;
