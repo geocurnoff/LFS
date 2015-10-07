@@ -4,8 +4,13 @@ DOCDIR=/usr/share/doc/$NAME
 
 cd $SRC/*/ || die
 
+if [ "$ARCHITECTURE" == "x86" ]; then
+  export ABI="32";
+fiw
+
 ./configure --prefix=$PREFIX \
             --enable-cxx   \
+	    --disable-static \
             --docdir=$DOCDIR || die "Configuring $NAME failed."
 
 
