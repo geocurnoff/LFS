@@ -6,6 +6,8 @@ LFS_SRC=$(readlink -f `dirname $0`)/../..
 . $LFS_SRC/packages/shared/tools.cfg.sh
 . $LFS_SRC/lib/prompting.sh
 
+echo $LFS
+
 if [ -e "/$TOOLS_PREFIX" ]; then
   # Check if it's a link
   [ -h "/$TOOLS_PREFIX" ] || die "/$TOOLS_PREFIX exists but it's not a link!"
